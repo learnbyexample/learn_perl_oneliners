@@ -16,7 +16,18 @@ See [Version_changes.md](./Version_changes.md) to keep track of changes made to 
 
 # E-book
 
-TODO
+You can purchase the book using these links:
+
+* https://gumroad.com/l/perl-oneliners
+* https://leanpub.com/perl-oneliners
+* You can also get the book as part of **Magical one-liners** bundle from
+    * https://gumroad.com/l/oneliners
+    * https://leanpub.com/b/oneliners
+* See https://learnbyexample.github.io/books/ for list of other books
+
+For a preview of the book, see [sample chapters](https://github.com/learnbyexample/learn_perl_oneliners/blob/main/sample_chapters/perl_oneliners_sample.pdf)
+
+The book can also be [viewed as a single markdown file in this repo](./perl_oneliners.md). See my blogpost on [generating pdf/epub from markdown using pandoc](https://learnbyexample.github.io/customizing-pandoc/) if you are interested in the ebook creation process.
 
 <br>
 
