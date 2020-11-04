@@ -1,8 +1,8 @@
 # Exercises
 
->![info](../images/info.svg) Exercise related files are available from [exercises folder of learn_perl_oneliners repo](https://github.com/learnbyexample/learn_perl_oneliners/tree/master/exercises).
+>![info](../images/info.svg) Exercise related files are available from [exercises folder of learn_perl_oneliners repo](https://github.com/learnbyexample/learn_perl_oneliners/tree/main/exercises).
 
->![info](../images/info.svg) To see the solutions, visit [Exercise_solutions.md](https://github.com/learnbyexample/learn_perl_oneliners/blob/master/exercises/Exercise_solutions.md).
+>![info](../images/info.svg) To see the solutions, visit [Exercise_solutions.md](https://github.com/learnbyexample/learn_perl_oneliners/blob/main/exercises/Exercise_solutions.md).
 
 <br>
 

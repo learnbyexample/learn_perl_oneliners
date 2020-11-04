@@ -1,6 +1,6 @@
 # Exercise solutions
 
->![info](../images/info.svg) Exercise related files are available from [exercises folder of learn_perl_oneliners repo](https://github.com/learnbyexample/learn_perl_oneliners/tree/master/exercises).
+>![info](../images/info.svg) Exercise related files are available from [exercises folder of learn_perl_oneliners repo](https://github.com/learnbyexample/learn_perl_oneliners/tree/main/exercises).
 
 <br>
 
