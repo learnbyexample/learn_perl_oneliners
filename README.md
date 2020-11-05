@@ -29,6 +29,8 @@ For a preview of the book, see [sample chapters](https://github.com/learnbyexamp
 
 The book can also be [viewed as a single markdown file in this repo](./perl_oneliners.md). See my blogpost on [generating pdf/epub from markdown using pandoc](https://learnbyexample.github.io/customizing-pandoc/) if you are interested in the ebook creation process.
 
+For web version of the book, visit https://learnbyexample.github.io/learn_perl_oneliners/
+
 <br>
 
 # Feedback
@@ -67,6 +69,9 @@ Twitter: https://twitter.com/learn_byexample
 * [pngquant](https://pngquant.org/) and [svgcleaner](https://github.com/RazrFalcon/svgcleaner) for optimizing images
 * [Warning](https://commons.wikimedia.org/wiki/File:Warning_icon.svg) and [Info](https://commons.wikimedia.org/wiki/File:Info_icon_002.svg) icons by [Amada44](https://commons.wikimedia.org/wiki/User:Amada44) under public domain
 * [softwareengineering.stackexchange](https://softwareengineering.stackexchange.com/questions/39/whats-your-favourite-quote-about-programming) and [skolakoda](https://skolakoda.org/programming-quotes) for programming quotes
+* [mdBook](https://github.com/rust-lang/mdBook) — for web version of the book
+    * [mdBook-pagetoc](https://github.com/JorelAli/mdBook-pagetoc) — for adding table of contents for each chapter
+    * [minify-html](https://github.com/wilsonzlin/minify-html) — for minifying html files
 
 A heartfelt thanks to all my readers. Your valuable support has significantly eased my financial concerns and allows me to continue writing books.
 
