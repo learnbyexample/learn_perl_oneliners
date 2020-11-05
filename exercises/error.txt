@@ -1,8 +1,0 @@
-print this
-but not that or this
-print this
-but not that
-if print this
-but not that
-print this
-but not that

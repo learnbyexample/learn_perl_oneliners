@@ -1,0 +1,507 @@
+<!DOCTYPE HTML><html lang=en class="sidebar-visible no-js light"><head><meta charset=UTF-8><title>Field separators - Perl one-liners cookbook</title><meta content="text/html; charset=utf-8"http-equiv=Content-Type><meta name=description content="Example based guide for text processing with Perl from the command line"><meta name=viewport content="width=device-width, initial-scale=1"><meta name=theme-color content=#ffffff><link rel=icon href=favicon.svg><link rel="shortcut icon"href=favicon.png><link rel=stylesheet href=css/variables.css><link rel=stylesheet href=css/general.css><link rel=stylesheet href=css/chrome.css><link rel=stylesheet href=FontAwesome/css/font-awesome.css><link rel=stylesheet href=fonts/fonts.css><link rel=stylesheet href=highlight.css><link rel=stylesheet href=tomorrow-night.css><link rel=stylesheet href=ayu-highlight.css><link rel=stylesheet href=style.css><body><script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script><script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script><script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script><script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script><nav id=sidebar class=sidebar aria-label="Table of contents"><div class=sidebar-scrollbox><ol class=chapter><li class="chapter-item expanded affix"><a href=cover.html>Cover</a><li class="chapter-item expanded affix"><a href=buy.html>Buy PDF/EPUB versions</a><li class="chapter-item expanded"><a href=preface.html><strong aria-hidden=true>1.</strong> Preface</a><li class="chapter-item expanded"><a href=one-liner-introduction.html><strong aria-hidden=true>2.</strong> One-liner introduction</a><li class="chapter-item expanded"><a href=line-processing.html><strong aria-hidden=true>3.</strong> Line processing</a><li class="chapter-item expanded"><a href=in-place-file-editing.html><strong aria-hidden=true>4.</strong> In-place file editing</a><li class="chapter-item expanded"><a href=field-separators.html class=active><strong aria-hidden=true>5.</strong> Field separators</a><li class="chapter-item expanded"><a href=record-separators.html><strong aria-hidden=true>6.</strong> Record separators</a><li class="chapter-item expanded"><a href=using-modules.html><strong aria-hidden=true>7.</strong> Using modules</a><li class="chapter-item expanded"><a href=multiple-file-input.html><strong aria-hidden=true>8.</strong> Multiple file input</a><li class="chapter-item expanded"><a href=processing-multiple-records.html><strong aria-hidden=true>9.</strong> Processing multiple records</a><li class="chapter-item expanded"><a href=two-file-processing.html><strong aria-hidden=true>10.</strong> Two file processing</a><li class="chapter-item expanded"><a href=dealing-with-duplicates.html><strong aria-hidden=true>11.</strong> Dealing with duplicates</a><li class="chapter-item expanded"><a href=Exercise_solutions.html><strong aria-hidden=true>12.</strong> Exercise Solutions</a></ol></div><div id=sidebar-resize-handle class=sidebar-resize-handle></div></nav><div id=page-wrapper class=page-wrapper><div class=page><div id=menu-bar-hover-placeholder></div><div id=menu-bar class="menu-bar sticky bordered"><div class=left-buttons><button id=sidebar-toggle class=icon-button type=button title="Toggle Table of Contents"aria-label="Toggle Table of Contents"aria-controls=sidebar><i class="fa fa-bars"></i></button><button id=theme-toggle class=icon-button type=button title="Change theme"aria-label="Change theme"aria-haspopup=true aria-expanded=false aria-controls=theme-list><i class="fa fa-paint-brush"></i></button><ul id=theme-list class=theme-popup aria-label=Themes role=menu><li role=none><button role=menuitem class=theme id=light>Light (default)</button><li role=none><button role=menuitem class=theme id=rust>Rust</button><li role=none><button role=menuitem class=theme id=coal>Coal</button><li role=none><button role=menuitem class=theme id=navy>Navy</button><li role=none><button role=menuitem class=theme id=ayu>Ayu</button></ul><button id=search-toggle class=icon-button type=button title="Search. (Shortkey: s)"aria-label="Toggle Searchbar"aria-expanded=false aria-keyshortcuts=S aria-controls=searchbar><i class="fa fa-search"></i></button></div><h1 class=menu-title>Perl one-liners cookbook</h1><div class=right-buttons><a href=https://github.com/learnbyexample/learn_perl_oneliners title="Git repository"aria-label="Git repository"> <i id=git-repository-button class="fa fa-github"></i> </a></div></div><div id=search-wrapper class=hidden><form id=searchbar-outer class=searchbar-outer><input type=search name=search id=searchbar name=searchbar placeholder="Search this book ..."aria-controls=searchresults-outer aria-describedby=searchresults-header></form><div id=searchresults-outer class="searchresults-outer hidden"><div id=searchresults-header class=searchresults-header></div><ul id=searchresults></ul></div></div><script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script><div id=content class=content><main><div class=sidetoc><nav class=pagetoc></nav></div><h1><a class=header href=#field-separators id=field-separators>Field separators</a></h1><p>This chapter will dive deep into field processing. You'll learn how to set input and output field separators, how to use regexps for defining fields and how to work with fixed length fields.<h2><a class=header href=#default-field-separation id=default-field-separation>Default field separation</a></h2><p>By default, the <code>-a</code> option splits based on one or more sequence of <strong>whitespace</strong> characters. In addition, whitespaces at the start or end of input gets trimmed and won't be part of field contents. Using <code>-a</code> is equivalent to <code>@F = split</code>. From <a href=https://perldoc.perl.org/functions/split>perldoc: split</a>:<blockquote><p><code>split</code> emulates the default behavior of the command line tool <code>awk</code> when the PATTERN is either omitted or a string composed of a single space character (such as <code>' '</code> or <code>"\x20"</code>, but not e.g. <code>/ /</code>). In this case, any leading whitespace in EXPR is removed before splitting occurs, and the PATTERN is instead treated as if it were <code>/\s+/</code>; in particular, this means that any contiguous whitespace (not just a single space character) is used as a separator. However, this special treatment can be avoided by specifying the pattern <code>/ /</code> instead of the string <code>" "</code>, thereby allowing only a single space character to be a separator.</blockquote><pre><code class=language-bash>$ # $#F gives index of last element, i.e. size of array - 1
+$ echo '   a   b   c   ' | perl -anE 'say $#F'
+2
+$ # note that leading whitespaces isn't part of field content
+$ echo '   a   b   c   ' | perl -anE 'say $F[0]'
+a
+$ # note that trailing whitespaces isn't part of field content
+$ echo '   a   b   c   ' | perl -anE 'say "$F[-1]."'
+c.
+
+$ # here's another example with more whitespace characters thrown in
+$ # in scalar context, @F will return size of the array
+$ printf '     one \t\f\v two\t\r\tthree \t\r ' | perl -anE 'say scalar @F'
+3
+$ printf '     one \t\f\v two\t\r\tthree \t\r ' | perl -anE 'say "$F[1]."'
+two.
+</code></pre><h2><a class=header href=#input-field-separator id=input-field-separator>Input field separator</a></h2><p>You can use the <code>-F</code> command line option to specify a custom regexp field separator. Note that <code>-a</code> option implicitly sets <code>-n</code> and <code>-F</code> option implicitly sets <code>-n</code> and <code>-a</code> on newer versions of Perl. However, this book will always explicitly use these options.<pre><code class=language-bash>$ # use ':' as input field separator
+$ echo 'goal:amazing:whistle:kwality' | perl -F: -anE 'say "$F[0]\n$F[2]"'
+goal
+whistle
+
+$ # use quotes to avoid clashes with shell special characters
+$ echo 'one;two;three;four' | perl -F';' -anE 'say $F[2]'
+three
+
+$ echo 'load;err_msg--\ant,r2..not' | perl -F'\W+' -anE 'say $F[2]'
+ant
+
+$ echo 'hi.bye.hello' | perl -F'\.' -anE 'say $F[1]'
+bye
+</code></pre><p>You can also specify the regexp to <code>-F</code> option inside <code>//</code> delimiters as well as add <code>LIMIT</code> argument if needed.<pre><code class=language-bash>$ # count number of vowels for each input line
+$ # can also use: -F'(?i)[aeiou]'
+$ printf 'COOL\nnice car\n' | perl -F'/[aeiou]/i' -anE 'say $#F'
+2
+3
+
+$ # note that newline character is present as part of the last field content
+$ echo 'goal:amazing:whistle:kwality' | perl -F'/:/,$_,2' -ane 'print $F[1]'
+amazing:whistle:kwality
+</code></pre><p>To get individual characters, you can use empty argument for the <code>-F</code> option.<pre><code class=language-bash>$ echo 'apple' | perl -F -anE 'say $F[0]'
+a
+
+$ # -CS option will turn on UTF-8 for stdin/stdout/stderr streams
+$ echo 'fox:αλεπού' | perl -CS -F -anE 'say @F[4..6]'
+αλε
+</code></pre><p>For more information about using <code>perl</code> with different encodings, see:<ul><li><a href=https://perldoc.perl.org/perlrun#-C-%5Bnumber/list%5D>perldoc: -C option</a><li><a href=https://unix.stackexchange.com/questions/389615/tr-analog-for-unicode-characters>unix.stackexchange: tr with unicode characters</a><li><a href=https://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid-utf-8-by-default>stackoverflow: Why does modern Perl avoid UTF-8 by default?</a></ul><blockquote><p><img src=images/warning.svg alt=warning> If the custom field separator with <code>-F</code> option doesn't affect the newline character, then the last element can contain the newline character.</blockquote><pre><code class=language-bash>$ # last element will not have newline character with default -a
+$ # as leading/trailing whitespaces are trimmed with default split
+$ echo 'cat dog' | perl -anE 'say "[$F[-1]]"'
+[dog]
+
+$ # last element will have newline character since field separator is ':'
+$ echo 'cat:dog' | perl -F: -anE 'say "[$F[-1]]"'
+[dog
+]
+$ # unless the input itself doesn't have newline character
+$ printf 'cat:dog' | perl -F: -anE 'say "[$F[-1]]"'
+[dog]
+</code></pre><p>The newline character can also show up as the content of last field.<pre><code class=language-bash>$ # both leading and trailing whitespaces are trimmed
+$ echo '  a b   c   ' | perl -anE 'say $#F'
+2
+
+$ # leading empty element won't be removed here
+$ # and last element will have only newline character as its value
+$ echo ':a:b:c:' | perl -F: -anE 'say $#F; say "[$F[-1]]"'
+4
+[
+]
+</code></pre><p>As mentioned before, the <code>-l</code> option is helpful if you wish to remove the newline character (more details will be discussed in <a href=./record-separators.html#record-separators>Record separators</a> chapter). A side effect of removing the newline character before applying <code>split</code> is that a trailing empty field will also get removed (you can explicitly call <code>split</code> function with <code>-1</code> as limit to prevent this).<pre><code class=language-bash>$ # -l will remove the newline character
+$ # -l will also cause 'print' to append the newline character
+$ echo 'cat:dog' | perl -F: -lane 'print "[$F[-1]]"'
+[dog]
+
+$ # since newline character is chomped, last element is empty
+$ # which is then removed due to default 'split' behavior
+$ echo ':a:b:c:' | perl -F: -lane 'print scalar @F'
+4
+$ # explicit call to split with -1 as limit will preserve the empty element
+$ echo ':a:b:c:' | perl -lne 'print scalar split/:/,$_,-1'
+5
+</code></pre><blockquote><p><img src=images/warning.svg alt=warning> As per <a href=https://perldoc.perl.org/perlrun#-Fpattern>perldoc: -F option</a>, "You can't use literal whitespace or NUL characters in the pattern." Here's some examples.</blockquote><pre><code class=language-bash>$ # only one element, field separator didn't match at all!!
+$ echo 'pick eat rest laugh' | perl -F'/t /' -lane 'print $F[0]'
+pick eat rest laugh
+$ # number of splits is correct
+$ # but the space character shouldn't be part of field here
+$ echo 'pick eat rest laugh' | perl -F't ' -lane 'print $F[1]'
+ res
+$ # this gives the expected behavior
+$ echo 'pick eat rest laugh' | perl -F't\x20' -lane 'print $F[1]'
+res
+
+$ # Error!!
+$ echo 'pick eat rest laugh' | perl -F't[ ]' -lane 'print $F[1]'
+Unmatched [ in regex; marked by &LT-- HERE in m/t[ &LT-- HERE /.
+$ # no issues if 'split' is used explicitly
+$ echo 'pick eat rest laugh' | perl -lne 'print((split /t[ ]/)[1])'
+res
+
+$ # example with NUL specified literally and as an escape sequence
+$ printf 'a\0b\0c' | perl -F$'\0' -anE 'say join ",", @F' | cat -v
+a,^@,b,^@,c
+$ printf 'a\0b\0c' | perl -F'\0' -anE 'say join ",", @F' | cat -v
+a,b,c
+</code></pre><h2><a class=header href=#output-field-separator id=output-field-separator>Output field separator</a></h2><p>There are a few ways to affect the separator to be used while displaying multiple values.<p><strong>Method 1</strong>: The value of <code>$,</code> special variable is used as the separator when multiple arguments (or list/array) are passed to <code>print</code> and <code>say</code> functions. <code>$,</code> could be remembered easily by noting that <code>,</code> is used to separate multiple arguments. Note that <code>-l</code> option is used in the examples below as a good practice even when not needed.<blockquote><p><img src=images/info.svg alt=info> See <a href=https://perldoc.perl.org/perlvar>perldoc: perlvar</a> for alternate names of special variables if you use <a href=https://metacpan.org/pod/English>metacpan: English</a> module. For example, <code>$OFS</code> or <code>$OUTPUT_FIELD_SEPARATOR</code> instead of <code>$,</code></blockquote><pre><code class=language-bash>$ perl -lane 'BEGIN{$,=" "} print $F[0], $F[2]' table.txt
+brown mat
+blue mug
+yellow window
+
+$ s='Sample123string42with777numbers'
+$ echo "$s" | perl -F'\d+' -lane 'BEGIN{$,=","} print @F'
+Sample,string,with,numbers
+
+$ # default value of $, is undef
+$ echo 'table' | perl -F -lane 'print @F[0..2]'
+tab
+</code></pre><p><strong>Method 2</strong>: By using the <code>join</code> function.<pre><code class=language-bash>$ s='Sample123string42with777numbers'
+$ echo "$s" | perl -F'\d+' -lane 'print join ",", @F'
+Sample,string,with,numbers
+
+$ s='goal:amazing:whistle:kwality'
+$ echo "$s" | perl -F: -lane 'print join "-", @F[-1, 1, 0]'
+kwality-amazing-goal
+$ echo "$s" | perl -F: -lane 'print join "::", @F, 42'
+goal::amazing::whistle::kwality::42
+</code></pre><p><strong>Method 3</strong>: You can also manually build the output string within double quotes. Or use <code>$"</code> to specify the field separator for an array value within double quotes. <code>$"</code> could be remembered easily by noting that interpolation happens within double quotes.<pre><code class=language-bash>$ s='goal:amazing:whistle:kwality'
+
+$ echo "$s" | perl -F: -lane 'print "$F[0] $F[2]"'
+goal whistle
+
+$ # default value of $" is space
+$ echo "$s" | perl -F: -lane 'print "@F[0, 2]"'
+goal whistle
+
+$ echo "$s" | perl -F: -lane 'BEGIN{$"="-"} print "msg: @F[-1, 1, 0]"'
+msg: kwality-amazing-goal
+</code></pre><h2><a class=header href=#changing-number-of-fields id=changing-number-of-fields>Changing number of fields</a></h2><p>Manipulating <code>$#F</code> will change the number of fields for <code>@F</code> array.<pre><code class=language-bash>$ s='goal:amazing:whistle:kwality'
+
+$ # reducing fields
+$ echo "$s" | perl -F: -lane '$#F=1; print join ",", @F'
+goal,amazing
+
+$ # increasing fields
+$ echo "$s" | perl -F: -lane '$F[$#F+1]="sea"; print join ":", @F'
+goal:amazing:whistle:kwality:sea
+
+$ # empty fields will be created as needed
+$ echo "$s" | perl -F: -lane '$F[7]="go"; print join ":", @F'
+goal:amazing:whistle:kwality::::go
+</code></pre><p>Assigning <code>$#F</code> to <code>-1</code> or lower will delete all the fields.<pre><code class=language-bash>$ echo "1:2:3" | perl -F: -lane '$#F=-1; print "[@F]"'
+[]
+</code></pre><p>Here's an example of adding a new field based on existing fields.<pre><code class=language-bash>$ cat marks.txt
+Dept    Name    Marks
+ECE     Raj     53
+ECE     Joel    72
+EEE     Moi     68
+CSE     Surya   81
+EEE     Tia     59
+ECE     Om      92
+CSE     Amy     67
+
+$ # adds a new grade column based on marks in 3rd column
+$ perl -anE 'BEGIN{$,="\t"; @g = qw(D C B A S)}
+             say @F, $.==1 ? "Grade" : $g[$F[-1]/10 - 5]' marks.txt
+Dept    Name    Marks   Grade
+ECE     Raj     53      D
+ECE     Joel    72      B
+EEE     Moi     68      C
+CSE     Surya   81      A
+EEE     Tia     59      D
+ECE     Om      92      S
+CSE     Amy     67      C
+</code></pre><h2><a class=header href=#defining-field-contents-instead-of-using-split id=defining-field-contents-instead-of-using-split>Defining field contents instead of using split</a></h2><p>The <code>-F</code> option uses the <code>split</code> function to get field values from input content. In contrast, using <code>/regexp/g</code> allows you to define what should the fields be made up of.<pre><code class=language-bash>$ s='Sample123string42with777numbers'
+
+$ # define fields to be one or more consecutive digits
+$ # can also use: perl -nE 'say((/\d+/g)[1])'
+$ echo "$s" | perl -nE '@f=/\d+/g; say $f[1]'
+42
+
+$ # define fields to be one or more consecutive alphabets
+$ echo "$s" | perl -lne 'print join ",", /[a-z]+/ig'
+Sample,string,with,numbers
+</code></pre><p>Here's some examples to display results only if there's a match. Without the <code>if</code> conditions, you'll get empty lines for non-matching lines. Quoting from <a href=https://perldoc.perl.org/perlop#The-empty-pattern-//>perldoc: The empty pattern //</a><blockquote><p>If the <em>PATTERN</em> evaluates to the empty string, the last successfully matched regular expression is used instead. In this case, only the <code>g</code> and <code>c</code> flags on the empty pattern are honored; the other flags are taken from the original pattern. If no match has previously succeeded, this will (silently) act instead as a genuine empty pattern (which will always match).</blockquote><pre><code class=language-bash>$ perl -nE 'say join "\n", //g if /\bm\w*\b/' table.txt
+mat
+mug
+
+$ # /\bb\w*\b/ will come into play only if a word starting with 'h' isn't found
+$ # so, first line matches 'hair' but not 'brown' or 'bread'
+$ # other lines don't have words starting with 'h'
+$ perl -nE 'say join "\n", //g if /\bh\w*\b/ || /\bb\w*\b/' table.txt
+hair
+blue
+banana
+</code></pre><p>A simple <code>split</code> fails for <code>csv</code> input where fields can contain embedded delimiter characters. For example, a field content <code>"fox,42"</code> when <code>,</code> is the delimiter.<pre><code class=language-bash>$ s='eagle,"fox,42",bee,frog'
+
+$ # simply using , as separator isn't sufficient
+$ echo "$s" | perl -F, -lane 'print $F[1]'
+"fox
+</code></pre><p>While <a href=https://metacpan.org/pod/Text::CSV>metacpan: Text::CSV</a> module should be preferred for robust <code>csv</code> parsing, regexp is enough for simple formats.<pre><code class=language-bash>$ echo "$s" | perl -lne 'print((/"[^"]+"|[^,]+/g)[1])'
+"fox,42"
+</code></pre><h2><a class=header href=#fixed-width-processing id=fixed-width-processing>Fixed width processing</a></h2><p>The <code>unpack</code> function is more than just a different way of string slicing. It supports various formats and pre-processing, see <a href=https://perldoc.perl.org/functions/unpack>perldoc: unpack</a>, <a href=https://perldoc.perl.org/functions/pack>perldoc: pack</a> and <a href=https://perldoc.perl.org/perlpacktut>perldoc: perlpacktut</a> for details.<p>In the example below, <code>a</code> indicates arbitrary binary string. The optional number that follows indicates length of the field.<pre><code class=language-bash>$ cat items.txt
+apple   fig banana
+50      10  200
+
+$ # here field widths have been assigned such that
+$ # extra spaces are placed at the end of each field
+$ # $_ is the default input string for 'unpack' function
+$ perl -lne 'print join ",", unpack "a8a4a6"' items.txt
+apple   ,fig ,banana
+50      ,10  ,200
+$ perl -lne 'print((unpack "a8a4a6")[1])' items.txt
+fig 
+10  
+</code></pre><p>You can specify characters to be ignored with <code>x</code> followed by optional length.<pre><code class=language-bash>$ # first field is 5 characters
+$ # then 3 characters are ignored and 3 characters for second field
+$ # then 1 character is ignored and 6 characters for third field
+$ perl -lne 'print join ",", unpack "a5x3a3xa6"' items.txt
+apple,fig,banana
+50   ,10 ,200
+</code></pre><p>Using <code>*</code> will cause remaining characters of that particular format to be consumed. Here <code>Z</code> is used to process ASCII NUL separated string.<pre><code class=language-bash>$ printf 'banana\x0050\x00' | perl -nE 'say join ":", unpack "Z*Z*"'
+banana:50
+
+$ # first field is 5 characters, then 3 characters are ignored
+$ # all the remaining characters are assigned to second field
+$ perl -lne 'print join ",", unpack "a5x3a*"' items.txt
+apple,fig banana
+50   ,10  200
+</code></pre><p>Unpacking isn't always needed, string slicing using <code>substr</code> may suffice. See <a href=https://perldoc.perl.org/functions/substr>perldoc: substr</a> for documentation.<pre><code class=language-bash>$ # same as: perl -F -anE 'say @F[2..4]'
+$ echo 'b 123 good' | perl -nE 'say substr $_,2,3'
+123
+$ echo 'b 123 good' | perl -ne 'print substr $_,6'
+good
+
+$ # replacing arbitrary slice
+$ echo 'b 123 good' | perl -pe 'substr $_,2,3,"gleam"'
+b gleam good
+</code></pre><p>See also <a href=https://perldoc.perl.org/functions#Functions-for-fixed-length-data-or-records>perldoc: Functions for fixed-length data or records</a>.<h2><a class=header href=#assorted-field-processing-functions id=assorted-field-processing-functions>Assorted field processing functions</a></h2><p>Having seen command line options and features commonly used for field processing, this section will highlight some of the built-in functions. There's just too many to meaningfully cover them in all in detail, so consider this to be just a brief overview of features. See also <a href=https://perldoc.perl.org/functions#Perl-Functions-by-Category>perldoc: Perl Functions by Category</a>.<p>First up, the <code>grep</code> function that allows you to select fields based on a condition. In scalar context, it returns number of fields that matched the given condition. See <a href=https://perldoc.perl.org/functions/grep>perldoc: grep</a> for documentation. See also <a href=https://unix.stackexchange.com/questions/397498/create-lists-of-words-according-to-binary-numbers>unix.stackexchange: create lists of words according to binary numbers</a>.<pre><code class=language-bash>$ s='goal:amazing:42:whistle:kwality:3.14'
+
+$ # fields containing 'in' or 'it' or 'is'
+$ echo "$s" | perl -F: -lane 'print join ":", grep {/i[nts]/} @F'
+amazing:whistle:kwality
+
+$ # number of fields NOT containing a digit character
+$ echo "$s" | perl -F: -lane 'print scalar grep {!/\d/} @F'
+4
+
+$ s='hour hand band mat heated apple'
+$ echo "$s" | perl -lane 'print join "\n", grep {!/^h/ && length()&LT4} @F'
+mat
+
+$ echo '20 711 -983 5 21' | perl -lane 'print join ":", grep {$_ > 20} @F'
+711:21
+
+$ # maximum of one field containing 'r'
+$ perl -lane 'print if 1 >= grep {/r/} @F' table.txt
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+</code></pre><p>The <code>map</code> function transforms each element according to the logic passed to it. See <a href=https://perldoc.perl.org/functions/map>perldoc: map</a> for documentation.<pre><code class=language-bash>$ s='goal:amazing:42:whistle:kwality:3.14'
+$ echo "$s" | perl -F: -lane 'print join ":", map {uc} @F'
+GOAL:AMAZING:42:WHISTLE:KWALITY:3.14
+$ echo "$s" | perl -F: -lane 'print join ":", map {/^[gw]/ ? uc : $_} @F'
+GOAL:amazing:42:WHISTLE:kwality:3.14
+
+$ echo '23 756 -983 5' | perl -lane 'print join ":", map {$_ ** 2} @F'
+529:571536:966289:25
+
+$ echo 'AaBbCc' | perl -F -lane 'print join " ", map {ord} @F'
+65 97 66 98 67 99
+$ # for in-place modification of the input array
+$ echo 'AaBbCc' | perl -F -lane 'map {$_ = ord} @F; print "@F"'
+65 97 66 98 67 99
+
+$ echo 'a b c' | perl -lane 'print join ",", map {qq/"$_"/} @F'
+"a","b","c"
+</code></pre><p>Here's an example with <code>grep</code> and <code>map</code> combined.<pre><code class=language-bash>$ s='hour hand band mat heated pineapple'
+$ echo "$s" | perl -lane 'print join "\n", map {y/ae/X/r} grep {/^h/} @F'
+hour
+hXnd
+hXXtXd
+
+$ # with 'grep' alone, provided the transformation doesn't affect the condition
+$ # also, @F will be changed here, above map+grep code will not affect @F
+$ echo "$s" | perl -lane 'print join "\n", grep {y/ae/X/; /^h/} @F'
+hour
+hXnd
+hXXtXd
+</code></pre><p>Here's some examples with <code>sort</code> and <code>reverse</code> functions for arrays and strings. See <a href=https://perldoc.perl.org/functions/sort>perldoc: sort</a> and <a href=https://perldoc.perl.org/functions/reverse>perldoc: reverse</a> for documentation.<pre><code class=language-bash>$ # sorting numbers
+$ echo '23 756 -983 5' | perl -lane 'print join " ", sort {$a <=> $b} @F'
+-983 5 23 756
+
+$ s='floor bat to dubious four'
+$ # default alphabetic sorting in ascending order
+$ echo "$s" | perl -lane 'print join ":", sort @F'
+bat:dubious:floor:four:to
+
+$ # sort by length of the fields in ascending order
+$ echo "$s" | perl -lane 'print join ":", sort {length($a) <=> length($b)} @F'
+to:bat:four:floor:dubious
+$ # descending order
+$ echo "$s" | perl -lane 'print join ":", sort {length($b) <=> length($a)} @F'
+dubious:floor:four:bat:to
+
+$ # same as: perl -F -lane 'print sort {$b cmp $a} @F'
+$ echo 'foobar' | perl -F -lane 'print reverse sort @F'
+roofba
+</code></pre><p>Here's an example with multiple sorting conditions. If the transformation applied for each field is expensive, using <a href=https://en.wikipedia.org/wiki/Schwartzian_transform>Schwartzian transform</a> can provide a faster result. See also <a href=https://stackoverflow.com/questions/45951050/multiple-sorting-by-alphabet-and-hexadecimal-in-perl>stackoverflow: multiple sorting conditions</a>.<pre><code class=language-bash>$ s='try a bad to good i teal by nice how'
+
+$ # longer words first, ascending alphabetic order as tie-breaker
+$ echo "$s" | perl -anE 'say join ":",
+                    sort {length($b) <=> length($a) or $a cmp $b} @F'
+good:nice:teal:bad:how:try:by:to:a:i
+
+$ # using Schwartzian transform
+$ echo "$s" | perl -anE 'say join ":", map {$_->[0]}
+                         sort {$b->[1] <=> $a->[1] or $a->[0] cmp $b->[0]}
+                         map {[$_, length($_)]} @F'
+good:nice:teal:bad:how:try:by:to:a:i
+</code></pre><p>Here's an example for sorting in descending order based on header column names.<pre><code class=language-bash>$ cat marks.txt
+Dept    Name    Marks
+ECE     Raj     53
+ECE     Joel    72
+EEE     Moi     68
+CSE     Surya   81
+EEE     Tia     59
+ECE     Om      92
+CSE     Amy     67
+
+$ perl -lane '@i = sort {$F[$b] cmp $F[$a]} 0..$#F if $.==1;
+              print join "\t", @F[@i]' marks.txt
+Name    Marks   Dept
+Raj     53      ECE
+Joel    72      ECE
+Moi     68      EEE
+Surya   81      CSE
+Tia     59      EEE
+Om      92      ECE
+Amy     67      CSE
+</code></pre><blockquote><p><img src=images/info.svg alt=info> See <a href=./using-modules.html#using-modules>Using modules</a> chapter for more field processing functions.</blockquote><h2><a class=header href=#summary id=summary>Summary</a></h2><p>This chapter discussed various ways in which you can split (or define) the input into fields and manipulate them. Many more examples will be discussed in later chapters.<h2><a class=header href=#exercises id=exercises>Exercises</a></h2><p><strong>a)</strong> Extract only the contents between <code>()</code> or <code>)(</code> from each input line. Assume that <code>()</code> characters will be present only once every line.<pre><code class=language-bash>$ cat brackets.txt
+foo blah blah(ice) 123 xyz$ 
+(almond-pista) choco
+yo )yoyo( yo
+
+##### add your solution here
+ice
+almond-pista
+yoyo
+</code></pre><p><strong>b)</strong> For the input file <code>scores.csv</code>, extract <code>Name</code> and <code>Physics</code> fields in the format shown below.<pre><code class=language-bash>$ cat scores.csv
+Name,Maths,Physics,Chemistry
+Blue,67,46,99
+Lin,78,83,80
+Er,56,79,92
+Cy,97,98,95
+Ort,68,72,66
+Ith,100,100,100
+
+##### add your solution here
+Name:Physics
+Blue:46
+Lin:83
+Er:79
+Cy:98
+Ort:72
+Ith:100
+</code></pre><p><strong>c)</strong> For the input file <code>scores.csv</code>, display names of those who've scored above <code>80</code> in Maths.<pre><code class=language-bash>##### add your solution here
+Cy
+Ith
+</code></pre><p><strong>d)</strong> Display the number of word characters for the given inputs. Word definition here is same as used in regular expressions. Can you construct two different solutions as indicated below?<pre><code class=language-bash>$ # solve using 's' operator
+$ echo 'hi there' | ##### add your solution here
+7
+
+$ # solve without using substitution or transliteration operator
+$ echo 'u-no;co%."(do_12:as' | ##### add your solution here
+12
+</code></pre><p><strong>e)</strong> Construct a solution that works for both the given sample inputs and the corresponding output shown.<pre><code class=language-bash>$ s1='1 "grape" and "mango" and "guava"'
+$ s2='("a 1""d""c-2""b")'
+
+$ echo "$s1" | ##### add your solution here
+"grape","guava","mango"
+$ echo "$s2" | ##### add your solution here
+"a 1","b","c-2","d"
+</code></pre><p><strong>f)</strong> Display only the third and fifth characters from each input line.<pre><code class=language-bash>$ printf 'restore\ncat one\ncricket' | ##### add your solution here
+so
+to
+ik
+</code></pre><p><strong>g)</strong> Transform the given input file <code>fw.txt</code> to get the output as shown below. If second field is empty (i.e. contains only space characters), replace it with <code>NA</code>.<pre><code class=language-bash>$ cat fw.txt
+1.3  rs   90  0.134563
+3.8           6
+5.2  ye       8.2387
+4.2  kt   32  45.1
+
+##### add your solution here
+1.3,rs,0.134563
+3.8,NA,6
+5.2,ye,8.2387
+4.2,kt,45.1
+</code></pre><p><strong>h)</strong> For the input file <code>scores.csv</code>, display the header as well as any row which contains <code>b</code> or <code>t</code> (irrespective of case) in the first field.<pre><code class=language-bash>##### add your solution here
+Name,Maths,Physics,Chemistry
+Blue,67,46,99
+Ort,68,72,66
+Ith,100,100,100
+</code></pre><p><strong>i)</strong> Extract all whole words that contains <code>42</code> but not at the edge of a word. Assume a word cannot contain <code>42</code> more than once.<pre><code class=language-bash>$ s='hi42bye nice1423 bad42 cool_42a 42fake'
+$ echo "$s" | ##### add your solution here
+hi42bye
+nice1423
+cool_42a
+</code></pre><p><strong>j)</strong> For the input file <code>scores.csv</code>, add another column named <code>GP</code> which is calculated out of <code>100</code> by giving <code>50%</code> weightage to <code>Maths</code> and <code>25%</code> each for <code>Physics</code> and <code>Chemistry</code>.<pre><code class=language-bash>##### add your solution here
+Name,Maths,Physics,Chemistry,GP
+Blue,67,46,99,69.75
+Lin,78,83,80,79.75
+Er,56,79,92,70.75
+Cy,97,98,95,96.75
+Ort,68,72,66,68.5
+Ith,100,100,100,100.0
+</code></pre><p><strong>k)</strong> For the input file <code>mixed_fs.txt</code>, retain only first two fields from each input line. The input and output field separators should be space for first two lines and <code>,</code> for the rest of the lines.<pre><code class=language-bash>$ cat mixed_fs.txt
+rose lily jasmine tulip
+pink blue white yellow
+car,mat,ball,basket
+light green,brown,black,purple
+
+##### add your solution here
+rose lily
+pink blue
+car,mat
+light green,brown
+</code></pre><p><strong>l)</strong> For the given space separated numbers, filter only numbers in the range <code>20</code> to <code>1000</code> (inclusive).<pre><code class=language-bash>$ s='20 -983 5 756 634223'
+
+##### add your solution here
+20 756
+</code></pre><p><strong>m)</strong> For the given input file <code>words.txt</code>, filter all lines containing characters in ascending and descending order.<pre><code class=language-bash>$ cat words.txt
+bot
+art
+are
+boat
+toe
+flee
+reed
+
+$ # ascending order
+##### add your solution here
+bot
+art
+
+$ # descending order
+##### add your solution here
+toe
+reed
+</code></pre><p><strong>n)</strong> For the given space separated words, extract the three longest words.<pre><code class=language-bash>$ s='I bought two bananas and three mangoes'
+
+$ echo "$s" | ##### add your solution here
+bananas
+mangoes
+bought
+</code></pre><p><strong>o)</strong> Convert the contents of <code>split.txt</code> as shown below.<pre><code class=language-bash>$ cat split.txt
+apple,1:2:5,mango
+wry,4,look
+pencil,3:8,paper
+
+##### add your solution here
+apple,1,mango
+apple,2,mango
+apple,5,mango
+wry,4,look
+pencil,3,paper
+pencil,8,paper
+</code></pre><p><strong>p)</strong> Generate string combinations as shown below for the given input string passed as an environment variable.<pre><code class=language-bash>$ s='{x,y,z}{1,2,3}' ##### add your solution here
+x1 x2 x3 y1 y2 y3 z1 z2 z3
+</code></pre></main><nav class=nav-wrapper aria-label="Page navigation"><a rel=prev href=in-place-file-editing.html class="mobile-nav-chapters previous"title="Previous chapter"aria-label="Previous chapter"aria-keyshortcuts=Left> <i class="fa fa-angle-left"></i> </a><a rel=next href=record-separators.html class="mobile-nav-chapters next"title="Next chapter"aria-label="Next chapter"aria-keyshortcuts=Right> <i class="fa fa-angle-right"></i> </a><div style="clear: both"></div></nav></div></div><nav class=nav-wide-wrapper aria-label="Page navigation"><a rel=prev href=in-place-file-editing.html class="nav-chapters previous"title="Previous chapter"aria-label="Previous chapter"aria-keyshortcuts=Left> <i class="fa fa-angle-left"></i> </a><a rel=next href=record-separators.html class="nav-chapters next"title="Next chapter"aria-label="Next chapter"aria-keyshortcuts=Right> <i class="fa fa-angle-right"></i> </a></nav></div><script>
+            window.playground_copyable = true;
+        </script><script src=elasticlunr.min.js charset=utf-8></script><script src=mark.min.js charset=utf-8></script><script src=searcher.js charset=utf-8></script><script src=clipboard.min.js charset=utf-8></script><script src=highlight.js charset=utf-8></script><script src=book.js charset=utf-8></script><script src=sidebar.js></script>

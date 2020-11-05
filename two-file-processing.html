@@ -1,0 +1,313 @@
+<!DOCTYPE HTML><html lang=en class="sidebar-visible no-js light"><head><meta charset=UTF-8><title>Two file processing - Perl one-liners cookbook</title><meta content="text/html; charset=utf-8"http-equiv=Content-Type><meta name=description content="Example based guide for text processing with Perl from the command line"><meta name=viewport content="width=device-width, initial-scale=1"><meta name=theme-color content=#ffffff><link rel=icon href=favicon.svg><link rel="shortcut icon"href=favicon.png><link rel=stylesheet href=css/variables.css><link rel=stylesheet href=css/general.css><link rel=stylesheet href=css/chrome.css><link rel=stylesheet href=FontAwesome/css/font-awesome.css><link rel=stylesheet href=fonts/fonts.css><link rel=stylesheet href=highlight.css><link rel=stylesheet href=tomorrow-night.css><link rel=stylesheet href=ayu-highlight.css><link rel=stylesheet href=style.css><body><script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script><script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script><script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script><script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script><nav id=sidebar class=sidebar aria-label="Table of contents"><div class=sidebar-scrollbox><ol class=chapter><li class="chapter-item expanded affix"><a href=cover.html>Cover</a><li class="chapter-item expanded affix"><a href=buy.html>Buy PDF/EPUB versions</a><li class="chapter-item expanded"><a href=preface.html><strong aria-hidden=true>1.</strong> Preface</a><li class="chapter-item expanded"><a href=one-liner-introduction.html><strong aria-hidden=true>2.</strong> One-liner introduction</a><li class="chapter-item expanded"><a href=line-processing.html><strong aria-hidden=true>3.</strong> Line processing</a><li class="chapter-item expanded"><a href=in-place-file-editing.html><strong aria-hidden=true>4.</strong> In-place file editing</a><li class="chapter-item expanded"><a href=field-separators.html><strong aria-hidden=true>5.</strong> Field separators</a><li class="chapter-item expanded"><a href=record-separators.html><strong aria-hidden=true>6.</strong> Record separators</a><li class="chapter-item expanded"><a href=using-modules.html><strong aria-hidden=true>7.</strong> Using modules</a><li class="chapter-item expanded"><a href=multiple-file-input.html><strong aria-hidden=true>8.</strong> Multiple file input</a><li class="chapter-item expanded"><a href=processing-multiple-records.html><strong aria-hidden=true>9.</strong> Processing multiple records</a><li class="chapter-item expanded"><a href=two-file-processing.html class=active><strong aria-hidden=true>10.</strong> Two file processing</a><li class="chapter-item expanded"><a href=dealing-with-duplicates.html><strong aria-hidden=true>11.</strong> Dealing with duplicates</a><li class="chapter-item expanded"><a href=Exercise_solutions.html><strong aria-hidden=true>12.</strong> Exercise Solutions</a></ol></div><div id=sidebar-resize-handle class=sidebar-resize-handle></div></nav><div id=page-wrapper class=page-wrapper><div class=page><div id=menu-bar-hover-placeholder></div><div id=menu-bar class="menu-bar sticky bordered"><div class=left-buttons><button id=sidebar-toggle class=icon-button type=button title="Toggle Table of Contents"aria-label="Toggle Table of Contents"aria-controls=sidebar><i class="fa fa-bars"></i></button><button id=theme-toggle class=icon-button type=button title="Change theme"aria-label="Change theme"aria-haspopup=true aria-expanded=false aria-controls=theme-list><i class="fa fa-paint-brush"></i></button><ul id=theme-list class=theme-popup aria-label=Themes role=menu><li role=none><button role=menuitem class=theme id=light>Light (default)</button><li role=none><button role=menuitem class=theme id=rust>Rust</button><li role=none><button role=menuitem class=theme id=coal>Coal</button><li role=none><button role=menuitem class=theme id=navy>Navy</button><li role=none><button role=menuitem class=theme id=ayu>Ayu</button></ul><button id=search-toggle class=icon-button type=button title="Search. (Shortkey: s)"aria-label="Toggle Searchbar"aria-expanded=false aria-keyshortcuts=S aria-controls=searchbar><i class="fa fa-search"></i></button></div><h1 class=menu-title>Perl one-liners cookbook</h1><div class=right-buttons><a href=https://github.com/learnbyexample/learn_perl_oneliners title="Git repository"aria-label="Git repository"> <i id=git-repository-button class="fa fa-github"></i> </a></div></div><div id=search-wrapper class=hidden><form id=searchbar-outer class=searchbar-outer><input type=search name=search id=searchbar name=searchbar placeholder="Search this book ..."aria-controls=searchresults-outer aria-describedby=searchresults-header></form><div id=searchresults-outer class="searchresults-outer hidden"><div id=searchresults-header class=searchresults-header></div><ul id=searchresults></ul></div></div><script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script><div id=content class=content><main><div class=sidetoc><nav class=pagetoc></nav></div><h1><a class=header href=#two-file-processing id=two-file-processing>Two file processing</a></h1><p>This chapter focuses on solving problems which depend upon contents of two or more files. These are usually based on comparing records and fields. Sometimes, record number plays a role too. You'll also see some examples where entire file content is used.<h2><a class=header href=#comparing-records id=comparing-records>Comparing records</a></h2><p>Consider the following input files which will be compared line wise to get common lines and unique lines.<pre><code class=language-bash>$ cat color_list1.txt
+teal
+light blue
+green
+yellow
+
+$ cat color_list2.txt
+light blue
+black
+dark green
+yellow
+</code></pre><p>If you do not wish to use modules, you can make use of hash to compare records between two files.<pre><code class=language-bash>$ # common lines
+$ # same as: grep -Fxf color_list1.txt color_list2.txt
+$ # for two file input, $#ARGV will be 0 only for the first file
+$ # note that 'exists' isn't strictly necessary here
+$ perl -ne 'if(!$#ARGV){$h{$_}=1; next}
+            print if exists $h{$_}' color_list1.txt color_list2.txt
+light blue
+yellow
+
+$ # lines from color_list2.txt not present in color_list1.txt
+$ # same as: grep -vFxf color_list1.txt color_list2.txt
+$ perl -ne 'if(!$#ARGV){$h{$_}=1; next}
+            print if !exists $h{$_}' color_list1.txt color_list2.txt
+black
+dark green
+
+$ # reversing the order of input files gives
+$ # lines from color_list1.txt not present in color_list2.txt
+$ perl -ne 'if(!$#ARGV){$h{$_}=1; next}
+            print if !exists $h{$_}' color_list2.txt color_list1.txt
+teal
+green
+</code></pre><p>Here's some alternate ways to construct a solution for above examples.<pre><code class=language-bash>$ # using if-else instead of next
+$ perl -ne 'if(!$#ARGV){ $h{$_}=1 }
+            else{ print if exists $h{$_} }' color_list1.txt color_list2.txt
+light blue
+yellow
+
+$ # read all lines from first file passed as STDIN in BEGIN block
+$ perl -ne 'BEGIN{ $h{$_}=1 while &LTSTDIN> }
+            print if exists $h{$_}' &LTcolor_list1.txt color_list2.txt
+light blue
+yellow
+</code></pre><h2><a class=header href=#using-modules-for-set-operations id=using-modules-for-set-operations>Using modules for set operations</a></h2><p>You can use <code>uniq</code> function from <code>List::Util</code> module to preserve only one copy of duplicates from one or more input files. See <a href=./dealing-with-duplicates.html#dealing-with-duplicates>Dealing with duplicates</a> chapter for field based duplicate processing.<pre><code class=language-bash>$ # input order of lines is preserved
+$ # this is same as performing union between two sets
+$ perl -MList::Util=uniq -e 'print uniq <>' color_list1.txt color_list2.txt
+teal
+light blue
+green
+yellow
+black
+dark green
+</code></pre><p>The <a href=https://metacpan.org/pod/List::Compare>metacpan: List::Compare</a> module supports set operations like <strong>union</strong>, <strong>intersection</strong>, <strong>symmetric difference</strong> etc. See also <a href=https://metacpan.org/pod/Array::Utils>metacpan: Array::Utils</a>.<pre><code class=language-bash>$ # union, input order of lines is NOT preserved
+$ # note that only -e option is used and one of the files is passed as stdin
+$ perl -MList::Compare -e '@a1=&LTSTDIN>; @a2=<>;
+         print List::Compare->new(\@a1, \@a2)->get_union
+        ' &LTcolor_list1.txt color_list2.txt
+black
+dark green
+green
+light blue
+teal
+yellow
+
+$ # intersection (common lines)
+$ perl -MList::Compare -e '@a1=&LTSTDIN>; @a2=<>;
+         print List::Compare->new(\@a1, \@a2)->get_intersection
+        ' &LTcolor_list1.txt color_list2.txt
+light blue
+yellow
+
+$ # lines from color_list1.txt not present in color_list2.txt
+$ perl -MList::Compare -e '@a1=&LTSTDIN>; @a2=<>;
+         print List::Compare->new(\@a1, \@a2)->get_unique      
+        ' &LTcolor_list1.txt color_list2.txt
+green
+teal
+</code></pre><h2><a class=header href=#comparing-fields id=comparing-fields>Comparing fields</a></h2><p>In the previous sections, you saw how to compare whole contents of records between two files. This section will focus on comparing only specific field(s). The below sample file will be one of the two file inputs for examples in this section. Consider whitespace as the field separator, so <code>-a</code> option is enough to get the fields.<pre><code class=language-bash>$ cat marks.txt
+Dept    Name    Marks
+ECE     Raj     53
+ECE     Joel    72
+EEE     Moi     68
+CSE     Surya   81
+EEE     Tia     59
+ECE     Om      92
+CSE     Amy     67
+</code></pre><p>To start with, here's a single field comparison. The problem statement is to fetch all the records from <code>marks.txt</code> if the first field matches any of the departments listed in <code>dept.txt</code> file.<pre><code class=language-bash>$ cat dept.txt
+CSE
+ECE
+
+$ perl -ane 'if(!$#ARGV){ $h{$F[0]}=1 }
+             else{ print if exists $h{$F[0]} }' dept.txt marks.txt
+ECE     Raj     53
+ECE     Joel    72
+CSE     Surya   81
+ECE     Om      92
+CSE     Amy     67
+</code></pre><p>For multiple field comparison, you can use comma separated values to construct the hash keys. The special variable <code>$;</code> (whose default is <code>\034</code>) will be used to join these values. The <code>\034</code> character is usually not present in text files. If you cannot guarantee absence of this character, you can use some other character or use hash of hashes. See also <a href=https://stackoverflow.com/questions/17081212/create-a-perl-hash-with-an-array-as-the-key>stackoverflow: using array as hash key</a>.<pre><code class=language-bash>$ cat dept_name.txt
+EEE Moi
+CSE Amy
+ECE Raj
+
+$ # don't use array slice as hash keys
+$ perl -anE '$h{@F[0..1]}=1; say join ",", keys %h' dept_name.txt | cat -v
+Moi
+Moi,Amy
+Moi,Raj,Amy
+$ # default $; value is \034, same as SUBSEP in awk
+$ perl -anE '$h{$F[0],$F[1]}=1; say join ",", keys %h' dept_name.txt | cat -v
+EEE^\Moi
+CSE^\Amy,EEE^\Moi
+ECE^\Raj,CSE^\Amy,EEE^\Moi
+
+$ perl -ane 'if(!$#ARGV){ $h{$F[0],$F[1]}=1 }
+             else{ print if exists $h{$F[0],$F[1]} }' dept_name.txt marks.txt
+ECE     Raj     53
+EEE     Moi     68
+CSE     Amy     67
+</code></pre><p>Here's an alternate method with hash of hashes. See also <a href=https://perldoc.perl.org/perldsc#REFERENCES>perldoc: REFERENCES</a>.<pre><code class=language-bash>$ perl -ane 'if(!$#ARGV){ $h{$F[0]}{$F[1]}=1 }
+             else{ print if exists $h{$F[0]}{$F[1]} }' dept_name.txt marks.txt
+ECE     Raj     53
+EEE     Moi     68
+CSE     Amy     67
+</code></pre><p>In this example, one of the fields is used for numerical comparison.<pre><code class=language-bash>$ cat dept_mark.txt
+ECE 70
+EEE 65
+CSE 80
+
+$ # match Dept and minimum marks specified in dept_mark.txt
+$ perl -ane 'if(!$#ARGV){ $h{$F[0]}=$F[1] }
+             else{ print if exists $h{$F[0]} && $F[2]>=$h{$F[0]} }
+            ' dept_mark.txt marks.txt
+ECE     Joel    72
+EEE     Moi     68
+CSE     Surya   81
+ECE     Om      92
+</code></pre><p>Here's an example of adding a new field.<pre><code class=language-bash>$ cat role.txt
+Raj class_rep
+Amy sports_rep
+Tia placement_rep
+
+$ # $.=0 is needed to allow header line checking for second file
+$ perl -lane 'if(!$#ARGV){ $r{$F[0]}=$F[1]; $.=0 }
+              else{ print join "\t", @F, $.==1 ? "Role" : $r{$F[1]} }
+             ' role.txt marks.txt
+Dept    Name    Marks   Role
+ECE     Raj     53      class_rep
+ECE     Joel    72
+EEE     Moi     68
+CSE     Surya   81
+EEE     Tia     59      placement_rep
+ECE     Om      92
+CSE     Amy     67      sports_rep
+</code></pre><h2><a class=header href=#based-on-line-number id=based-on-line-number>Based on line number</a></h2><p>Here's an example that shows how you can replace <code>m</code>th line from a file with <code>n</code>th line from another file.<pre><code class=language-bash>$ # replace 3rd line of table.txt with
+$ # 2nd line of greeting.txt
+$ perl -pe 'BEGIN{ $m=3; $n=2; $s = &LTSTDIN> for 1..$n }
+            $_ = $s if $. == $m' &LTgreeting.txt table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+Have a nice day
+</code></pre><p>Here's an example where two files are processed simultaneously.<pre><code class=language-bash>$ # print line from greeting.txt if last column of corresponding line
+$ # from table.txt is a positive number
+$ perl -ne 'print if (split " ", &LTSTDIN>)[-1] > 0' &LTtable.txt greeting.txt
+Hi there
+Good bye
+</code></pre><h2><a class=header href=#multiline-fixed-string-substitution id=multiline-fixed-string-substitution>Multiline fixed string substitution</a></h2><p>You can use file slurping for fixed string multiline search and replace requirements. The below example is substituting complete lines. The solution will work for partial lines as well, provided there is no newline character at the end of <code>search.txt</code> and <code>repl.txt</code> files.<pre><code class=language-bash>$ head -n2 table.txt > search.txt
+$ cat repl.txt
+2$1$&3
+wise ice go goa
+
+$ perl -0777 -ne '$#ARGV==1 ? $s=$_ : $#ARGV==0 ? $r=$_ :
+                  print s/\Q$s/$r/gr' search.txt repl.txt table.txt
+2$1$&3
+wise ice go goa
+yellow banana window shoes 3.14
+</code></pre><blockquote><p><img src=images/warning.svg alt=warning> Don't save contents of <code>search.txt</code> and <code>repl.txt</code> in shell variables for passing them to the <code>perl</code> script. Trailing newlines and ASCII NUL characters will cause issues. See <a href=https://stackoverflow.com/questions/7427262/how-to-read-a-file-into-a-variable-in-shell/22607352#22607352>stackoverflow: pitfalls of reading file into shell variable</a> for details.</blockquote><h2><a class=header href=#add-file-content-conditionally id=add-file-content-conditionally>Add file content conditionally</a></h2><p><strong>Case 1:</strong> replace each matching line with entire contents of <code>STDIN</code>.<pre><code class=language-bash>$ # same as: sed -e '/[ot]/{r dept.txt' -e 'd}' greeting.txt
+$ perl -pe 'BEGIN{$r = join "", &LTSTDIN>} $_=$r if /[ot]/' &LTdept.txt greeting.txt
+CSE
+ECE
+Have a nice day
+CSE
+ECE
+</code></pre><p><strong>Case 2:</strong> insert entire contents of <code>STDIN</code> before each matching line.<pre><code class=language-bash>$ # same as: sed '/nice/e cat dept.txt' greeting.txt
+$ perl -pe 'BEGIN{$r = join "", &LTSTDIN>}
+            print $r if /nice/' &LTdept.txt greeting.txt
+Hi there
+CSE
+ECE
+Have a nice day
+Good bye
+</code></pre><p><strong>Case 3:</strong> append entire contents of <code>STDIN</code> after each matching line.<pre><code class=language-bash>$ # same as: sed '/nice/r dept.txt' greeting.txt
+$ perl -pe 'BEGIN{$r = join "", &LTSTDIN>}
+            $_ .= $r if /nice/' &LTdept.txt greeting.txt
+Hi there
+Have a nice day
+CSE
+ECE
+Good bye
+</code></pre><h2><a class=header href=#summary id=summary>Summary</a></h2><p>This chapter discussed use cases where you need to process the contents of two or more files based on entire record/file or field(s). The value of <code>$#ARGV</code> is handy for such cases (formula is <code>n-2</code> to match first file passed among <code>n</code> input files). The next chapter discusses more such examples, based solely on occurrences of duplicate values.<h2><a class=header href=#exercises id=exercises>Exercises</a></h2><p><strong>a)</strong> Use contents of <code>match_words.txt</code> file to display matching lines from <code>jumbled.txt</code> and <code>sample.txt</code>. The matching criteria is that the second word of lines from these files should match the third word of lines from <code>match_words.txt</code>.<pre><code class=language-bash>$ cat match_words.txt
+%whole(Hello)--{doubt}==ado==
+just,\joint*,concession<=nice
+
+$ # 'concession' is one of the third words from 'match_words.txt'
+$ # and second word from 'jumbled.txt'
+##### add your solution here
+wavering:concession/woof\retailer
+No doubt you like it too
+</code></pre><p><strong>b)</strong> Interleave contents of <code>secrets.txt</code> with the contents of a file passed as <code>stdin</code> in the format as shown below.<pre><code class=language-bash>##### add your solution here, use 'table.txt' for stdin data
+stag area row tick
+brown bread mat hair 42
+---
+deaf chi rate tall glad
+blue cake mug shirt -7
+---
+Bi tac toe - 42
+yellow banana window shoes 3.14
+</code></pre><p><strong>c)</strong> The file <code>search_terms.txt</code> contains one search string per line (these have no regexp metacharacters). Construct a solution that reads this file and displays search terms (matched case insensitively) that were found in all of the other input file arguments. Note that these terms should be matched with any part of the line, not just whole words.<pre><code class=language-bash>$ cat search_terms.txt
+hello
+row
+you
+is
+at
+
+$ # ip: search_terms.txt jumbled.txt mixed_fs.txt secrets.txt table.txt oops.txt
+##### add your solution here
+row
+at
+
+$ # ip: search_terms.txt ip.txt sample.txt oops.txt
+##### add your solution here
+hello
+you
+is
+</code></pre><p><strong>d)</strong> Replace third to fifth lines of input file <code>ip.txt</code> with second to fourth lines from file <code>para.txt</code><pre><code class=language-bash>##### add your solution here
+Hello World
+How are you
+Start working on that
+project you always wanted
+to, do not let it end
+You are funny
+</code></pre><p><strong>e)</strong> Insert one line from <code>jumbled.txt</code> before every two lines of <code>copyright.txt</code><pre><code class=language-bash>##### add your solution here
+overcoats;furrowing-typeface%pewter##hobby
+bla bla 2015 bla
+blah 2018 blah
+wavering:concession/woof\retailer
+bla bla bla
+copyright: 2020
+</code></pre><p><strong>f)</strong> Use entire contents of <code>match.txt</code> to search <code>error.txt</code> and replace with contents of <code>jumbled.txt</code>. Partial lines should NOT be matched.<pre><code class=language-bash>$ cat match.txt
+print this
+but not that
+$ cat error.txt
+print this
+but not that or this
+print this
+but not that
+if print this
+but not that
+print this
+but not that
+
+##### add your solution here
+print this
+but not that or this
+overcoats;furrowing-typeface%pewter##hobby
+wavering:concession/woof\retailer
+if print this
+but not that
+overcoats;furrowing-typeface%pewter##hobby
+wavering:concession/woof\retailer
+</code></pre></main><nav class=nav-wrapper aria-label="Page navigation"><a rel=prev href=processing-multiple-records.html class="mobile-nav-chapters previous"title="Previous chapter"aria-label="Previous chapter"aria-keyshortcuts=Left> <i class="fa fa-angle-left"></i> </a><a rel=next href=dealing-with-duplicates.html class="mobile-nav-chapters next"title="Next chapter"aria-label="Next chapter"aria-keyshortcuts=Right> <i class="fa fa-angle-right"></i> </a><div style="clear: both"></div></nav></div></div><nav class=nav-wide-wrapper aria-label="Page navigation"><a rel=prev href=processing-multiple-records.html class="nav-chapters previous"title="Previous chapter"aria-label="Previous chapter"aria-keyshortcuts=Left> <i class="fa fa-angle-left"></i> </a><a rel=next href=dealing-with-duplicates.html class="nav-chapters next"title="Next chapter"aria-label="Next chapter"aria-keyshortcuts=Right> <i class="fa fa-angle-right"></i> </a></nav></div><script>
+            window.playground_copyable = true;
+        </script><script src=elasticlunr.min.js charset=utf-8></script><script src=mark.min.js charset=utf-8></script><script src=searcher.js charset=utf-8></script><script src=clipboard.min.js charset=utf-8></script><script src=highlight.js charset=utf-8></script><script src=book.js charset=utf-8></script><script src=sidebar.js></script>

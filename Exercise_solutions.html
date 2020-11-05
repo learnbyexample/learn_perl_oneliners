@@ -1,0 +1,685 @@
+<!DOCTYPE HTML><html lang=en class="sidebar-visible no-js light"><head><meta charset=UTF-8><title>Exercise Solutions - Perl one-liners cookbook</title><meta content="text/html; charset=utf-8"http-equiv=Content-Type><meta name=description content="Example based guide for text processing with Perl from the command line"><meta name=viewport content="width=device-width, initial-scale=1"><meta name=theme-color content=#ffffff><link rel=icon href=favicon.svg><link rel="shortcut icon"href=favicon.png><link rel=stylesheet href=css/variables.css><link rel=stylesheet href=css/general.css><link rel=stylesheet href=css/chrome.css><link rel=stylesheet href=FontAwesome/css/font-awesome.css><link rel=stylesheet href=fonts/fonts.css><link rel=stylesheet href=highlight.css><link rel=stylesheet href=tomorrow-night.css><link rel=stylesheet href=ayu-highlight.css><link rel=stylesheet href=style.css><body><script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script><script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script><script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script><script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script><nav id=sidebar class=sidebar aria-label="Table of contents"><div class=sidebar-scrollbox><ol class=chapter><li class="chapter-item expanded affix"><a href=cover.html>Cover</a><li class="chapter-item expanded affix"><a href=buy.html>Buy PDF/EPUB versions</a><li class="chapter-item expanded"><a href=preface.html><strong aria-hidden=true>1.</strong> Preface</a><li class="chapter-item expanded"><a href=one-liner-introduction.html><strong aria-hidden=true>2.</strong> One-liner introduction</a><li class="chapter-item expanded"><a href=line-processing.html><strong aria-hidden=true>3.</strong> Line processing</a><li class="chapter-item expanded"><a href=in-place-file-editing.html><strong aria-hidden=true>4.</strong> In-place file editing</a><li class="chapter-item expanded"><a href=field-separators.html><strong aria-hidden=true>5.</strong> Field separators</a><li class="chapter-item expanded"><a href=record-separators.html><strong aria-hidden=true>6.</strong> Record separators</a><li class="chapter-item expanded"><a href=using-modules.html><strong aria-hidden=true>7.</strong> Using modules</a><li class="chapter-item expanded"><a href=multiple-file-input.html><strong aria-hidden=true>8.</strong> Multiple file input</a><li class="chapter-item expanded"><a href=processing-multiple-records.html><strong aria-hidden=true>9.</strong> Processing multiple records</a><li class="chapter-item expanded"><a href=two-file-processing.html><strong aria-hidden=true>10.</strong> Two file processing</a><li class="chapter-item expanded"><a href=dealing-with-duplicates.html><strong aria-hidden=true>11.</strong> Dealing with duplicates</a><li class="chapter-item expanded"><a href=Exercise_solutions.html class=active><strong aria-hidden=true>12.</strong> Exercise Solutions</a></ol></div><div id=sidebar-resize-handle class=sidebar-resize-handle></div></nav><div id=page-wrapper class=page-wrapper><div class=page><div id=menu-bar-hover-placeholder></div><div id=menu-bar class="menu-bar sticky bordered"><div class=left-buttons><button id=sidebar-toggle class=icon-button type=button title="Toggle Table of Contents"aria-label="Toggle Table of Contents"aria-controls=sidebar><i class="fa fa-bars"></i></button><button id=theme-toggle class=icon-button type=button title="Change theme"aria-label="Change theme"aria-haspopup=true aria-expanded=false aria-controls=theme-list><i class="fa fa-paint-brush"></i></button><ul id=theme-list class=theme-popup aria-label=Themes role=menu><li role=none><button role=menuitem class=theme id=light>Light (default)</button><li role=none><button role=menuitem class=theme id=rust>Rust</button><li role=none><button role=menuitem class=theme id=coal>Coal</button><li role=none><button role=menuitem class=theme id=navy>Navy</button><li role=none><button role=menuitem class=theme id=ayu>Ayu</button></ul><button id=search-toggle class=icon-button type=button title="Search. (Shortkey: s)"aria-label="Toggle Searchbar"aria-expanded=false aria-keyshortcuts=S aria-controls=searchbar><i class="fa fa-search"></i></button></div><h1 class=menu-title>Perl one-liners cookbook</h1><div class=right-buttons><a href=https://github.com/learnbyexample/learn_perl_oneliners title="Git repository"aria-label="Git repository"> <i id=git-repository-button class="fa fa-github"></i> </a></div></div><div id=search-wrapper class=hidden><form id=searchbar-outer class=searchbar-outer><input type=search name=search id=searchbar name=searchbar placeholder="Search this book ..."aria-controls=searchresults-outer aria-describedby=searchresults-header></form><div id=searchresults-outer class="searchresults-outer hidden"><div id=searchresults-header class=searchresults-header></div><ul id=searchresults></ul></div></div><script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script><div id=content class=content><main><div class=sidetoc><nav class=pagetoc></nav></div><h1><a class=header href=#exercise-solutions id=exercise-solutions>Exercise solutions</a></h1><blockquote><p><img src=images/info.svg alt=info> Exercise related files are available from <a href=https://github.com/learnbyexample/learn_perl_oneliners/tree/main/exercises>exercises folder of learn_perl_oneliners repo</a>.</blockquote><br><h1><a class=header href=#one-liner-introduction id=one-liner-introduction>One-liner introduction</a></h1><p><strong>a)</strong> For the input file <code>ip.txt</code>, display all lines containing <code>is</code>.<pre><code class=language-bash>$ cat ip.txt
+Hello World
+How are you
+This game is good
+Today is sunny
+12345
+You are funny
+
+$ perl -ne 'print if /is/' ip.txt
+This game is good
+Today is sunny
+</code></pre><p><strong>b)</strong> For the input file <code>ip.txt</code>, display first field of lines <em>not</em> containing <code>y</code>. Consider space as the field separator for this file.<pre><code class=language-bash>$ perl -anE 'say $F[0] if !/y/' ip.txt
+Hello
+This
+12345
+</code></pre><p><strong>c)</strong> For the input file <code>ip.txt</code>, display all lines containing no more than 2 fields.<pre><code class=language-bash>$ perl -ane 'print if $#F < 2' ip.txt
+Hello World
+12345
+</code></pre><p><strong>d)</strong> For the input file <code>ip.txt</code>, display all lines containing <code>is</code> in the second field.<pre><code class=language-bash>$ perl -ane 'print if $F[1] =~ /is/' ip.txt
+Today is sunny
+</code></pre><p><strong>e)</strong> For each line of the input file <code>ip.txt</code>, replace first occurrence of <code>o</code> with <code>0</code>.<pre><code class=language-bash>$ perl -pe 's/o/0/' ip.txt
+Hell0 World
+H0w are you
+This game is g0od
+T0day is sunny
+12345
+Y0u are funny
+</code></pre><p><strong>f)</strong> For the input file <code>table.txt</code>, calculate and display the product of numbers in the last field of each line. Consider space as the field separator for this file.<pre><code class=language-bash>$ cat table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+
+$ perl -anE 'BEGIN{$p=1} $p *= $F[-1]; END{say $p}' table.txt
+-923.16
+</code></pre><p><strong>g)</strong> Append <code>.</code> to all the input lines for the given <code>stdin</code> data.<pre><code class=language-bash>$ printf 'last\nappend\nstop\n' | perl -pe 's/$/./'
+last.
+append.
+stop.
+</code></pre><p><strong>h)</strong> Use contents of <code>s</code> variable to display all matching lines from the input file <code>ip.txt</code>. Assume that <code>s</code> doesn't have any regexp metacharacters. Construct the solution such that there's at least one word character immediately preceding the contents of <code>s</code> variable.<pre><code class=language-bash>$ s='is'
+
+$ r="$s" perl -ne 'print if /\B$ENV{r}/' ip.txt
+This game is good
+</code></pre><p><strong>i)</strong> Use <code>system</code> to display contents of filename present in second field (space separated) of the given input line.<pre><code class=language-bash>$ s='report.log ip.txt sorted.txt'
+$ echo "$s" | perl -ane 'system("cat $F[1]")'
+Hello World
+How are you
+This game is good
+Today is sunny
+12345
+You are funny
+
+$ s='power.txt table.txt'
+$ echo "$s" | perl -ane 'system("cat $F[1]")'
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+</code></pre><br><h1><a class=header href=#line-processing id=line-processing>Line processing</a></h1><p><strong>a)</strong> Remove only the third line of given input.<pre><code class=language-bash>$ seq 34 37 | perl -ne 'print if $. != 3'
+34
+35
+37
+</code></pre><p><strong>b)</strong> Display only fourth, fifth, sixth and seventh lines for the given input.<pre><code class=language-bash>$ seq 65 78 | perl -ne 'print if 4..7'
+68
+69
+70
+71
+</code></pre><p><strong>c)</strong> For the input file <code>ip.txt</code>, replace all occurrences of <code>are</code> with <code>are not</code> and <code>is</code> with <code>is not</code> only from line number <strong>4</strong> till end of file. Also, only the lines that were changed should be displayed in the output.<pre><code class=language-bash>$ cat ip.txt
+Hello World
+How are you
+This game is good
+Today is sunny
+12345
+You are funny
+
+$ perl -ne 'print if $. > 3 && s/are|is/$& not/g' ip.txt
+Today is not sunny
+You are not funny
+</code></pre><p><strong>d)</strong> For the given <code>stdin</code>, display only the first three lines. Avoid processing lines that are not relevant.<pre><code class=language-bash>$ seq 14 25 | perl -pe 'exit if $. > 3'
+14
+15
+16
+</code></pre><p><strong>e)</strong> For the input file <code>ip.txt</code>, display all lines from start of the file till the first occurrence of <code>game</code>.<pre><code class=language-bash>$ perl -ne 'print; exit if /game/' ip.txt
+Hello World
+How are you
+This game is good
+</code></pre><p><strong>f)</strong> For the input file <code>ip.txt</code>, display all lines that contain <code>is</code> but not <code>good</code>.<pre><code class=language-bash>$ perl -ne 'print if /is/ && !/good/' ip.txt
+Today is sunny
+</code></pre><p><strong>g)</strong> For the input file <code>ip.txt</code>, extract the word before the whole word <code>is</code> as well as the word after it. If such a match is found, display the two words around <code>is</code> in reversed order. For example, <code>hi;1 is--234 bye</code> should be converted to <code>234:1</code>. Assume that whole word <code>is</code> will not be present more than once in a single line.<pre><code class=language-bash>$ # can also use: perl -ne 'print if s/.*?(\w+)\W+is\W+(\w+).*/$2:$1/' ip.txt
+$ perl -nE 'say "$2:$1" if /(\w+)\W+is\W+(\w+)/' ip.txt
+good:game
+sunny:Today
+</code></pre><p><strong>h)</strong> For the given input string, replace <code>0xA0</code> with <code>0x7F</code> and <code>0xC0</code> with <code>0x1F</code>.<pre><code class=language-bash>$ s='start address: 0xA0, func1 address: 0xC0'
+
+$ echo "$s" | perl -pe 's/0xA0/0x7F/; s/0xC0/0x1F/'
+start address: 0x7F, func1 address: 0x1F
+</code></pre><p><strong>i)</strong> Find the starting index of first occurrence of <code>is</code> or <code>the</code> or <code>was</code> or <code>to</code> for each input line of the file <code>idx.txt</code>. Assume all input lines will match at least one of these terms.<pre><code class=language-bash>$ cat idx.txt
+match after the last newline character
+and then you want to test
+this is good bye then
+you were there to see?
+
+$ perl -nE '/is|the|was|to/; say $-[0]' idx.txt
+12
+4
+2
+9
+</code></pre><p><strong>j)</strong> Display all lines containing <code>[4]*</code> for the given <code>stdin</code> data.<pre><code class=language-bash>$ # can also use: perl -ne 'print if /\Q[4]*/'
+$ printf '2.3/[4]*6\n2[4]5\n5.3-[4]*9\n' | perl -ne 'print if index($_, "[4]*") != -1'
+2.3/[4]*6
+5.3-[4]*9
+</code></pre><p><strong>k)</strong> For the given input string, replace all lowercase alphabets to <code>x</code> only for words starting with <code>m</code>.<pre><code class=language-bash>$ s='ma2T3a a2p kite e2e3m meet'
+$ echo "$s" | perl -pe 's/\bm\w+/$&=~tr|a-z|x|r/ge'
+xx2T3x a2p kite e2e3m xxxx
+</code></pre><p><strong>l)</strong> For the input file <code>ip.txt</code>, delete all characters other than lowercase vowels and newline character. Perform this transformation only between a line containing <code>you</code> up to line number <code>4</code> (inclusive).<pre><code class=language-bash>$ # can also use: perl -pe 'tr/aeiou\n//cd if /you/ .. 4' ip.txt
+$ perl -lpe 'tr/aeiou//cd if /you/ .. 4' ip.txt
+Hello World
+oaeou
+iaeioo
+oaiu
+12345
+You are funny
+</code></pre><br><h1><a class=header href=#in-place-file-editing id=in-place-file-editing>In-place file editing</a></h1><p><strong>a)</strong> For the input file <code>text.txt</code>, replace all occurrences of <code>in</code> with <code>an</code> and write back the changes to <code>text.txt</code> itself. The original contents should get saved to <code>text.txt.orig</code><pre><code class=language-bash>$ cat text.txt
+can ran want plant
+tin fin fit mine line
+
+$ perl -i.orig -pe 's/in/an/g' text.txt
+
+$ cat text.txt
+can ran want plant
+tan fan fit mane lane
+$ cat text.txt.orig
+can ran want plant
+tin fin fit mine line
+</code></pre><p><strong>b)</strong> For the input file <code>text.txt</code>, replace all occurrences of <code>an</code> with <code>in</code> and write back the changes to <code>text.txt</code> itself. Do not create backups for this exercise. Note that you should have solved the previous exercise before starting this one.<pre><code class=language-bash>$ cat text.txt
+can ran want plant
+tan fan fit mane lane
+
+$ perl -i -pe 's/an/in/g' text.txt
+
+$ cat text.txt
+cin rin wint plint
+tin fin fit mine line
+$ diff text.txt text.txt.orig
+1c1
+< cin rin wint plint
+---
+> can ran want plant
+</code></pre><p><strong>c)</strong> For the input file <code>copyright.txt</code>, replace <code>copyright: 2018</code> with <code>copyright: 2020</code> and write back the changes to <code>copyright.txt</code> itself. The original contents should get saved to <code>2018_copyright.txt.bkp</code><pre><code class=language-bash>$ cat copyright.txt
+bla bla 2015 bla
+blah 2018 blah
+bla bla bla
+copyright: 2018
+
+$ perl -i'2018_*.bkp' -pe 's/copyright: \K2018/2020/g' copyright.txt
+
+$ cat copyright.txt
+bla bla 2015 bla
+blah 2018 blah
+bla bla bla
+copyright: 2020
+$ cat 2018_copyright.txt.bkp
+bla bla 2015 bla
+blah 2018 blah
+bla bla bla
+copyright: 2018
+</code></pre><p><strong>d)</strong> In the code sample shown below, two files are created by redirecting output of <code>echo</code> command. Then a <code>perl</code> command is used to edit <code>b1.txt</code> in-place as well as create a backup named <code>bkp.b1.txt</code>. Will the <code>perl</code> command work as expected? If not, why?<pre><code class=language-bash>$ echo '2 apples' > b1.txt
+$ echo '5 bananas' > -ibkp.txt
+$ perl -ibkp.* -pe 's/2/two/' b1.txt
+</code></pre><p>Unquoted strings on the command line are subjected to shell interpretation. So, <code>-ibkp.*</code> will get expanded as <code>-ibkp.txt</code> (as there exists a file whose name starts with <code>-ibkp.</code>). This results in back up filename as <code>b1.txtbkp.txt</code> (because <code>bkp.txt</code> will be treated as the suffix to be added to input file <code>b1.txt</code>). The correct usage is <code>perl -i'bkp.*' -pe 's/2/two/' b1.txt</code> to get <code>bkp.b1.txt</code> as the back up filename.</p><br><h1><a class=header href=#field-separators id=field-separators>Field separators</a></h1><p><strong>a)</strong> Extract only the contents between <code>()</code> or <code>)(</code> from each input line. Assume that <code>()</code> characters will be present only once every line.<pre><code class=language-bash>$ cat brackets.txt
+foo blah blah(ice) 123 xyz$ 
+(almond-pista) choco
+yo )yoyo( yo
+
+$ perl -F'[()]' -nE 'say $F[1]' brackets.txt
+ice
+almond-pista
+yoyo
+</code></pre><p><strong>b)</strong> For the input file <code>scores.csv</code>, extract <code>Name</code> and <code>Physics</code> fields in the format shown below.<pre><code class=language-bash>$ cat scores.csv
+Name,Maths,Physics,Chemistry
+Blue,67,46,99
+Lin,78,83,80
+Er,56,79,92
+Cy,97,98,95
+Ort,68,72,66
+Ith,100,100,100
+
+$ perl -F, -lane 'print "$F[0]:$F[2]"' scores.csv
+Name:Physics
+Blue:46
+Lin:83
+Er:79
+Cy:98
+Ort:72
+Ith:100
+</code></pre><p><strong>c)</strong> For the input file <code>scores.csv</code>, display names of those who've scored above <code>80</code> in Maths.<pre><code class=language-bash>$ perl -F, -lane 'print $F[0] if $F[1]>80' scores.csv
+Cy
+Ith
+</code></pre><p><strong>d)</strong> Display the number of word characters for the given inputs. Word definition here is same as used in regular expressions. Can you construct two different solutions as indicated below?<pre><code class=language-bash>$ # solve using 's' operator
+$ echo 'hi there' | perl -nE 'say s/\w//g'
+7
+
+$ # solve without using substitution or transliteration operator
+$ echo 'u-no;co%."(do_12:as' | perl -F'\w' -anE 'say $#F'
+12
+</code></pre><p><strong>e)</strong> Construct a solution that works for both the given sample inputs and the corresponding output shown.<pre><code class=language-bash>$ s1='1 "grape" and "mango" and "guava"'
+$ s2='("a 1""d""c-2""b")'
+
+$ echo "$s1" | perl -nE 'say join ",", sort /"[^"]+"/g'
+"grape","guava","mango"
+$ echo "$s2" | perl -nE 'say join ",", sort /"[^"]+"/g'
+"a 1","b","c-2","d"
+</code></pre><p><strong>f)</strong> Display only the third and fifth characters from each input line.<pre><code class=language-bash>$ printf 'restore\ncat one\ncricket' | perl -F -anE 'say @F[2,4]'
+so
+to
+ik
+</code></pre><p><strong>g)</strong> Transform the given input file <code>fw.txt</code> to get the output as shown below. If second field is empty (i.e. contains only space characters), replace it with <code>NA</code>.<pre><code class=language-bash>$ cat fw.txt
+1.3  rs   90  0.134563
+3.8           6
+5.2  ye       8.2387
+4.2  kt   32  45.1
+
+$ perl -ne '@f = unpack "a3x2a2x7a*";
+            $f[1] = "NA" if $f[1] eq "  ";
+            print join ",", @f' fw.txt 
+1.3,rs,0.134563
+3.8,NA,6
+5.2,ye,8.2387
+4.2,kt,45.1
+</code></pre><p><strong>h)</strong> For the input file <code>scores.csv</code>, display the header as well as any row which contains <code>b</code> or <code>t</code> (irrespective of case) in the first field.<pre><code class=language-bash>$ perl -F, -ane 'print if $F[0]=~/[bt]/i || $.==1' scores.csv
+Name,Maths,Physics,Chemistry
+Blue,67,46,99
+Ort,68,72,66
+Ith,100,100,100
+</code></pre><p><strong>i)</strong> Extract all whole words that contains <code>42</code> but not at the edge of a word. Assume a word cannot contain <code>42</code> more than once.<pre><code class=language-bash>$ s='hi42bye nice1423 bad42 cool_42a 42fake'
+$ echo "$s" | perl -nE 'say join "\n", /\w+42\w+/g'
+hi42bye
+nice1423
+cool_42a
+</code></pre><p><strong>j)</strong> For the input file <code>scores.csv</code>, add another column named <code>GP</code> which is calculated out of <code>100</code> by giving <code>50%</code> weightage to <code>Maths</code> and <code>25%</code> each for <code>Physics</code> and <code>Chemistry</code>.<pre><code class=language-bash>$ perl -F, -lane 'print join ",", @F, $.==1 ? "GP" :
+                        $F[1]/2 + ($F[2]+$F[3])/4' scores.csv
+Name,Maths,Physics,Chemistry,GP
+Blue,67,46,99,69.75
+Lin,78,83,80,79.75
+Er,56,79,92,70.75
+Cy,97,98,95,96.75
+Ort,68,72,66,68.5
+Ith,100,100,100,100.0
+</code></pre><p><strong>k)</strong> For the input file <code>mixed_fs.txt</code>, retain only first two fields from each input line. The input and output field separators should be space for first two lines and <code>,</code> for the rest of the lines.<pre><code class=language-bash>$ cat mixed_fs.txt
+rose lily jasmine tulip
+pink blue white yellow
+car,mat,ball,basket
+light green,brown,black,purple
+
+$ perl -lne '$s = $.&LT3 ? " " : ",";
+             print join $s, (split $s)[0,1]' mixed_fs.txt
+rose lily
+pink blue
+car,mat
+light green,brown
+</code></pre><p><strong>l)</strong> For the given space separated numbers, filter only numbers in the range <code>20</code> to <code>1000</code> (inclusive).<pre><code class=language-bash>$ s='20 -983 5 756 634223'
+
+$ echo "$s" | perl -lane 'print join " ", grep {$_>=20 && $_<=1000} @F'
+20 756
+</code></pre><p><strong>m)</strong> For the given input file <code>words.txt</code>, filter all lines containing characters in ascending and descending order.<pre><code class=language-bash>$ cat words.txt
+bot
+art
+are
+boat
+toe
+flee
+reed
+
+$ # ascending order
+$ perl -F -lane 'print if $_ eq join "", sort @F' words.txt
+bot
+art
+
+$ # descending order
+$ perl -F -lane 'print if $_ eq join "", reverse sort @F' words.txt
+toe
+reed
+</code></pre><p><strong>n)</strong> For the given space separated words, extract the three longest words.<pre><code class=language-bash>$ s='I bought two bananas and three mangoes'
+
+$ echo "$s" | perl -anE 'say join "\n", (sort {length($b) <=> length($a)} @F)[0..2]'
+bananas
+mangoes
+bought
+</code></pre><p><strong>o)</strong> Convert the contents of <code>split.txt</code> as shown below.<pre><code class=language-bash>$ cat split.txt
+apple,1:2:5,mango
+wry,4,look
+pencil,3:8,paper
+
+$ perl -F, -lane 'print join ",", $F[0],$_,$F[2] for split /:/,$F[1]' split.txt
+apple,1,mango
+apple,2,mango
+apple,5,mango
+wry,4,look
+pencil,3,paper
+pencil,8,paper
+</code></pre><p><strong>p)</strong> Generate string combinations as shown below for the given input string passed as an environment variable.<pre><code class=language-bash>$ s='{x,y,z}{1,2,3}' perl -E 'say join " ", glob $ENV{s}'
+x1 x2 x3 y1 y2 y3 z1 z2 z3
+</code></pre><br><h1><a class=header href=#record-separators id=record-separators>Record separators</a></h1><p><strong>a)</strong> The input file <code>jumbled.txt</code> consists of words separated by various delimiters. Display all words that contain <code>an</code> or <code>at</code> or <code>in</code> or <code>it</code>, one per line.<pre><code class=language-bash>$ cat jumbled.txt
+overcoats;furrowing-typeface%pewter##hobby
+wavering:concession/woof\retailer
+
+$ perl -0777 -nE 'say join "\n", /\w*[ai][nt]\w*/g' jumbled.txt
+overcoats
+furrowing
+wavering
+</code></pre><p><strong>b)</strong> Emulate <code>paste -sd,</code> with <code>perl</code>.<pre><code class=language-bash>$ # this command joins all input lines with ',' character
+$ paste -sd, ip.txt
+Hello World,How are you,This game is good,Today is sunny,12345,You are funny
+$ # make sure there's no ',' at end of the line
+$ # and that there's a newline character at the end of the line
+$ perl -lpe '$\ = eof ? "\n" : ","' ip.txt
+Hello World,How are you,This game is good,Today is sunny,12345,You are funny
+
+$ # if there's only one line in input, again make sure there's no trailing ','
+$ # and that there's a newline character at the end of the line
+$ printf 'foo' | paste -sd,
+foo
+$ printf 'foo' | perl -lpe '$\ = eof ? "\n" : ","'
+foo
+</code></pre><p><strong>c)</strong> For the input file <code>sample.txt</code>, extract all paragraphs having words starting with <code>do</code>.<pre><code class=language-bash>$ cat sample.txt
+Hello World
+
+Good day
+How are you
+
+Just do-it
+Believe it
+
+Today is sunny
+Not a bit funny
+No doubt you like it too
+
+Much ado about nothing
+He he he
+
+$ # note that there's no extra empty line at the end of expected output
+$ perl -00 -lnE 'if(/\bdo/){say $s, $_; $s="\n"}' sample.txt
+Just do-it
+Believe it
+
+Today is sunny
+Not a bit funny
+No doubt you like it too
+</code></pre><p><strong>d)</strong> For the input file <code>sample.txt</code>, change all paragraphs into single line by joining lines using <code>.</code> and a space character as the separator. And add a final <code>.</code> to each paragraph.<pre><code class=language-bash>$ # note that there's no extra empty line at the end of expected output
+$ perl -F'\n' -00 -lane '$\ = eof ? ".\n" : ".\n\n"; print join ". ", @F' sample.txt
+Hello World.
+
+Good day. How are you.
+
+Just do-it. Believe it.
+
+Today is sunny. Not a bit funny. No doubt you like it too.
+
+Much ado about nothing. He he he.
+</code></pre><p><strong>e)</strong> For the given input, use <code>;;</code> as record separators and <code>:</code> as field separators. Display all records with second field having an integer greater than <code>50</code>.<pre><code class=language-bash>$ s='mango:100;;apple:25;;grapes:75'
+
+$ # note that the output has ;; at the end but not newline character
+$ printf "$s" | perl -F: -lane 'BEGIN{$/=$\=";;"} print if $F[1]>50'
+mango:100;;grapes:75;; 
+</code></pre><br><h1><a class=header href=#using-modules id=using-modules>Using modules</a></h1><p><strong>a)</strong> For the given space separated words, display the max word determined by alphabetic order.<pre><code class=language-bash>$ s='let in bat xml me lion'
+
+$ echo "$s" | perl -lane 'print ((sort @F)[-1])'
+xml
+</code></pre><p><strong>b)</strong> For the given space separated words, randomize the order of characters for each word.<pre><code class=language-bash>$ s='this is a sample sentence'
+
+$ # sample randomized output shown here, could be different for you
+$ echo "$s" | perl -MList::Util=shuffle -lane '
+              print join " ", map {join "", shuffle split//} @F'
+htis si a melasp ecnnsete
+</code></pre><p><strong>c)</strong> Use <a href=https://metacpan.org/pod/XML::LibXML>metacpan: XML::LibXML</a> to get content of all tags named <code>blue</code> for the input file <code>sample.xml</code>. See <a href=https://grantm.github.io/perl-libxml-by-example/>grantm: Perl XML::LibXML by example</a> for a detailed book on <code>XML::LibXML</code> module.<pre><code class=language-bash>$ cat sample.xml
+&LTdoc>
+    &LTgreeting type="ask">Hi there. How are you?&LT/greeting>
+    &LTgreeting type="reply">I am good.&LT/greeting>
+    &LTcolor>
+        &LTblue>flower&LT/blue>
+        &LTblue>sand stone&LT/blue>
+        &LTlight-blue>sky&LT/light-blue>
+        &LTlight-blue>water&LT/light-blue>
+    &LT/color>
+&LT/doc>
+
+$ perl -MXML::LibXML -E '$ip = XML::LibXML->load_xml(location => $ARGV[0]);
+     say $_->to_literal() for $ip->findnodes("//blue")' sample.xml
+flower
+sand stone
+</code></pre><p><strong>d)</strong> Display current time in the format shown below.<pre><code class=language-bash>$ # output will be different for you
+$ # you can use %F to get YYYY-MM-DD format
+$ perl -MTime::Piece -E 'say localtime->strftime("%e-%b-%Y %T")'
+29-Oct-2020 14:23:17
+</code></pre><blockquote><p><img src=images/info.svg alt=info> See <a href=https://metacpan.org/pod/DateTime>metacpan: DateTime</a> for more comprehensive functions.</blockquote><br><h1><a class=header href=#multiple-file-input id=multiple-file-input>Multiple file input</a></h1><p><strong>a)</strong> Print the last field of first two lines for the input files passed as arguments to the <code>perl</code> script. Assume space as the field separators for these two files. To make the output more informative, print filenames and a separator as shown in the output below. Assume input files will have at least two lines.<pre><code class=language-bash>$ # assume table.txt ip.txt are passed as file inputs
+$ perl -lane 'print ">$ARGV<" if $.==1; print "$F[-1]";
+              if($.==2){print "----------"; close ARGV}
+             ' table.txt ip.txt
+>table.txt<
+42
+-7
+----------
+>ip.txt<
+World
+you
+----------
+</code></pre><p><strong>b)</strong> For the given list of input files, display all filenames that contain <code>at</code> or <code>fun</code> in the third field in any of the input lines. Assume space as the field separator.<pre><code class=language-bash>$ # assume sample.txt secrets.txt ip.txt table.txt are passed as file inputs
+$ perl -anE 'if($F[2]=~/at|fun/){say $ARGV; close ARGV}
+            ' sample.txt secrets.txt ip.txt table.txt
+secrets.txt
+ip.txt
+table.txt
+</code></pre><p><strong>c)</strong> Print the first two lines for each of the input files <code>ip.txt</code>, <code>sample.txt</code> and <code>table.txt</code>. Also, add a separator between the results as shown below (note that the separator isn't present at the end of the output). Assume input files will have at least two lines.<pre><code class=language-bash>$ perl -pe 'print $s if $.==1; if($.==2){close ARGV; $s="---\n"}
+           ' ip.txt sample.txt table.txt
+Hello World
+How are you
+---
+Hello World
+
+---
+brown bread mat hair 42
+blue cake mug shirt -7
+</code></pre><br><h1><a class=header href=#processing-multiple-records id=processing-multiple-records>Processing multiple records</a></h1><p><strong>a)</strong> For the input file <code>sample.txt</code>, print a matching line containing <code>do</code> only if the previous line is empty and the line before that contains <code>you</code>.<pre><code class=language-bash>$ perl -ne 'print if /do/ && $p1 eq "\n" && $p2=~/you/; $p2=$p1; $p1=$_' sample.txt
+Just do-it
+Much ado about nothing
+</code></pre><p><strong>b)</strong> Print only the second matching line respectively for the search terms <code>do</code> and <code>not</code> for the input file <code>sample.txt</code>. Match these terms case insensitively.<pre><code class=language-bash>$ # for reference, here's all the matches
+$ grep -i 'do' sample.txt
+Just do-it
+No doubt you like it too
+Much ado about nothing
+$ grep -i 'not' sample.txt
+Not a bit funny
+Much ado about nothing
+
+$ perl -ne 'print if /do/i && ++$do==2;
+            print if /not/i && ++$not==2;' sample.txt
+No doubt you like it too
+Much ado about nothing
+</code></pre><p><strong>c)</strong> For the input file <code>sample.txt</code>, print matching line as well as <code>n</code> lines around the matching lines. The value for <code>n</code> is passed to the <code>perl</code> command as an environment value.<pre><code class=language-bash>$ # match a line containing 'are' or 'bit'
+$ n=1 perl -e '@ip=<>; for(0..$#ip){$i=$_-$ENV{n}; $i=0 if $i&LT0;
+               print @ip[$i..$_+$ENV{n}] if $ip[$_]=~/are|bit/}' sample.txt
+Good day
+How are you
+
+Today is sunny
+Not a bit funny
+No doubt you like it too
+
+$ # match a line containing 'World'
+$ n=2 perl -e '@ip=<>; for (0..$#ip){$i=$_-$ENV{n}; $i=0 if $i&LT0;
+                print @ip[$i..$_+$ENV{n}] if $ip[$_]=~/World/}' sample.txt
+Hello World
+
+Good day
+</code></pre><p><strong>d)</strong> For the input file <code>broken.txt</code>, print all lines between the markers <code>top</code> and <code>bottom</code>. The first <code>perl</code> command shown below doesn't work because it is matching till end of file if second marker isn't found. Assume that the input file cannot have two <code>top</code> markers without a <code>bottom</code> marker appearing in between and vice-versa.<pre><code class=language-bash>$ cat broken.txt
+top
+3.14
+bottom
+---
+top
+1234567890
+bottom
+top
+Hi there
+Have a nice day
+Good bye
+
+$ # wrong output
+$ perl -ne '$f=0 if /bottom/; print if $f; $f=1 if /top/' broken.txt
+3.14
+1234567890
+Hi there
+Have a nice day
+Good bye
+
+$ # expected output
+$ tac broken.txt | perl -ne '$f=0 if /top/; print if $f; $f=1 if /bottom/' | tac
+3.14
+1234567890
+</code></pre><p><strong>e)</strong> For the input file <code>concat.txt</code>, extract contents from a line starting with <code>%%% </code> until but not including the next such line. The block to be extracted is indicated by variable <code>n</code> passed as an environment value.<pre><code class=language-bash>$ cat concat.txt
+%%% addr.txt
+How are you
+This game is good
+Today %%% is sunny
+%%% broken.txt
+top %%%
+1234567890
+bottom
+%%% sample.txt
+Just %%% do-it
+Believe it
+%%% mixed_fs.txt
+pink blue white yellow
+car,mat,ball,basket
+
+$ n=2 perl -ne '$c++ if /^%%% /; print if $c==$ENV{n}' concat.txt
+%%% broken.txt
+top %%%
+1234567890
+bottom
+
+$ n=4 perl -ne '$c++ if /^%%% /; print if $c==$ENV{n}' concat.txt
+%%% mixed_fs.txt
+pink blue white yellow
+car,mat,ball,basket
+</code></pre><p><strong>f)</strong> For the input file <code>perl.md</code>, replace all occurrences of <code>perl</code> (irrespective of case) with <code>Perl</code>. But, do not replace any matches between <code>```perl</code> and <code>```</code> lines (<code>perl</code> in these markers shouldn't be replaced either).<pre><code class=language-bash>$ perl -pe '$f=1 if /^```perl$/; s/perl/Perl/gi if !$f;
+            $f=0 if /^```$/' perl.md > out.md
+
+$ diff -sq out.md expected.md 
+Files out.md and expected.md are identical
+</code></pre><p><strong>g)</strong> Print the last two lines for each of the input files <code>ip.txt</code>, <code>sample.txt</code> and <code>table.txt</code>. Also, add a separator between the results as shown below (note that the separator isn't present at the end of the output). Assume input files will have at least two lines.<pre><code class=language-bash>$ perl -ne 'if(eof){print $s,$p,$_; $s="---\n"}; $p=$_' ip.txt sample.txt table.txt
+12345
+You are funny
+---
+Much ado about nothing
+He he he
+---
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+</code></pre><br><h1><a class=header href=#two-file-processing id=two-file-processing>Two file processing</a></h1><p><strong>a)</strong> Use contents of <code>match_words.txt</code> file to display matching lines from <code>jumbled.txt</code> and <code>sample.txt</code>. The matching criteria is that the second word of lines from these files should match the third word of lines from <code>match_words.txt</code>.<pre><code class=language-bash>$ cat match_words.txt
+%whole(Hello)--{doubt}==ado==
+just,\joint*,concession<=nice
+
+$ # 'concession' is one of the third words from 'match_words.txt'
+$ # and second word from 'jumbled.txt'
+$ perl -ne '@w=/\w++/g; $#ARGV==1 ? $h{$w[2]}=1 :
+            exists $h{$w[1]} && print
+           ' match_words.txt jumbled.txt sample.txt
+wavering:concession/woof\retailer
+No doubt you like it too
+</code></pre><p><strong>b)</strong> Interleave contents of <code>secrets.txt</code> with the contents of a file passed as <code>stdin</code> in the format as shown below.<pre><code class=language-bash>$ perl -ne 'print $s, $_, scalar &LTSTDIN>; $s="---\n"' secrets.txt &LTtable.txt
+stag area row tick
+brown bread mat hair 42
+---
+deaf chi rate tall glad
+blue cake mug shirt -7
+---
+Bi tac toe - 42
+yellow banana window shoes 3.14
+</code></pre><p><strong>c)</strong> The file <code>search_terms.txt</code> contains one search string per line (these have no regexp metacharacters). Construct a solution that reads this file and displays search terms (matched case insensitively) that were found in all of the other input file arguments. Note that these terms should be matched with any part of the line, not just whole words.<pre><code class=language-bash>$ cat search_terms.txt
+hello
+row
+you
+is
+at
+
+$ # ip: search_terms.txt jumbled.txt mixed_fs.txt secrets.txt table.txt oops.txt
+$ perl -lne 'BEGIN{$c = $#ARGV-1} if($#ARGV == $c){ $s{$_}=1; next }
+             for $k (keys %s) { $m{$k}=1 if /$k/i }
+             if(eof){ !exists $m{$_} && delete $s{$_} for keys %s; %m=undef }
+             END{ print for (keys %s) }
+            ' search_terms.txt jumbled.txt mixed_fs.txt secrets.txt table.txt oops.txt
+row
+at
+
+$ # ip: search_terms.txt ip.txt sample.txt oops.txt
+$ perl -lne 'BEGIN{$c = $#ARGV-1} if($#ARGV == $c){ $s{$_}=1; next }
+             for $k (keys %s) { $m{$k}=1 if /$k/i }
+             if(eof){ !exists $m{$_} && delete $s{$_} for keys %s; %m=undef }
+             END{ print for (keys %s) }
+            ' search_terms.txt ip.txt sample.txt oops.txt
+hello
+you
+is
+</code></pre><p><strong>d)</strong> Replace third to fifth lines of input file <code>ip.txt</code> with second to fourth lines from file <code>para.txt</code><pre><code class=language-bash>$ perl -ne 'print if 2..4' para.txt | perl -pe '$_="" if 3..5; print &LTSTDIN> if $.==3' ip.txt
+Hello World
+How are you
+Start working on that
+project you always wanted
+to, do not let it end
+You are funny
+</code></pre><p><strong>e)</strong> Insert one line from <code>jumbled.txt</code> before every two lines of <code>copyright.txt</code><pre><code class=language-bash>$ perl -pe 'print scalar &LTSTDIN> if $. % 2' &LTjumbled.txt copyright.txt
+overcoats;furrowing-typeface%pewter##hobby
+bla bla 2015 bla
+blah 2018 blah
+wavering:concession/woof\retailer
+bla bla bla
+copyright: 2020
+</code></pre><p><strong>f)</strong> Use entire contents of <code>match.txt</code> to search <code>error.txt</code> and replace with contents of <code>jumbled.txt</code>. Partial lines should NOT be matched.<pre><code class=language-bash>$ cat match.txt
+print this
+but not that
+$ cat error.txt
+print this
+but not that or this
+print this
+but not that
+if print this
+but not that
+print this
+but not that
+
+$ perl -0777 -ne '$#ARGV==1 ? $s=$_ : $#ARGV==0 ? $r=$_ :
+                  print s/^\Q$s/$r/gmr' match.txt jumbled.txt error.txt
+print this
+but not that or this
+overcoats;furrowing-typeface%pewter##hobby
+wavering:concession/woof\retailer
+if print this
+but not that
+overcoats;furrowing-typeface%pewter##hobby
+wavering:concession/woof\retailer
+</code></pre><br><h1><a class=header href=#dealing-with-duplicates id=dealing-with-duplicates>Dealing with duplicates</a></h1><p><strong>a)</strong> Retain only first copy of a line for the input file <code>lines.txt</code>. Case should be ignored while comparing lines. For example <code>hi there</code> and <code>HI TheRE</code> will be considered as duplicates.<pre><code class=language-bash>$ cat lines.txt
+Go There
+come on
+go there
+---
+2 apples and 5 mangoes
+come on!
+---
+2 Apples
+COME ON
+
+$ perl -ne 'print if !$h{lc $_}++' lines.txt
+Go There
+come on
+---
+2 apples and 5 mangoes
+come on!
+2 Apples
+</code></pre><p><strong>b)</strong> Retain only first copy of a line for the input file <code>twos.txt</code>. Assume space as field separator with two fields on each line. Compare the lines irrespective of order of the fields. For example, <code>hehe haha</code> and <code>haha hehe</code> will be considered as duplicates.<pre><code class=language-bash>$ cat twos.txt
+hehe haha
+door floor
+haha hehe
+6;8 3-4
+true blue
+hehe bebe
+floor door
+3-4 6;8
+tru eblue
+haha hehe
+
+$ # can also use: perl -ane 'print if !$h{join " ", sort @F}++' twos.txt
+$ perl -lane 'print if !$h{$F[0] le $F[1] ? $_ : "$F[1] $F[0]"}++' twos.txt
+hehe haha
+door floor
+6;8 3-4
+true blue
+hehe bebe
+tru eblue
+</code></pre><p><strong>c)</strong> For the input file <code>twos.txt</code>, display only unique lines. Assume space as field separator with two fields on each line. Compare the lines irrespective of order of the fields. For example, <code>hehe haha</code> and <code>haha hehe</code> will be considered as duplicates.<pre><code class=language-bash>$ perl -ane '$k = join " ", sort @F;
+             !$#ARGV ? !$h{$k}++ : $h{$k}==1 && print' twos.txt twos.txt
+true blue
+hehe bebe
+tru eblue
+</code></pre></main><nav class=nav-wrapper aria-label="Page navigation"><a rel=prev href=dealing-with-duplicates.html class="mobile-nav-chapters previous"title="Previous chapter"aria-label="Previous chapter"aria-keyshortcuts=Left> <i class="fa fa-angle-left"></i> </a><div style="clear: both"></div></nav></div></div><nav class=nav-wide-wrapper aria-label="Page navigation"><a rel=prev href=dealing-with-duplicates.html class="nav-chapters previous"title="Previous chapter"aria-label="Previous chapter"aria-keyshortcuts=Left> <i class="fa fa-angle-left"></i> </a></nav></div><script>
+            window.playground_copyable = true;
+        </script><script src=elasticlunr.min.js charset=utf-8></script><script src=mark.min.js charset=utf-8></script><script src=searcher.js charset=utf-8></script><script src=clipboard.min.js charset=utf-8></script><script src=highlight.js charset=utf-8></script><script src=book.js charset=utf-8></script><script src=sidebar.js></script>
