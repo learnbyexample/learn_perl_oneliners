@@ -1033,3 +1033,20 @@ hehe bebe
 tru eblue
 ```
 
+<br>
+
+# Perl rename command
+
+**a)** Determine and implement the rename logic based on the filenames and expected output shown below.
+
+```bash
+$ touch ' (2020) Report part 1 . txt ' 'analysis Part 3 (2018) .log'
+
+$ rename 's/^\h+|\h+$|[()]//g; s/\h*\.\h*/./g; s/\s+/_/g; s/.+/\L$&/' *
+
+$ ls
+2020_report_part_1.txt  analysis_part_3_2018.log
+```
+
+**b)** See [unix.stackexchange: rename Q&A sorted by votes](https://unix.stackexchange.com/questions/tagged/rename?tab=Votes) for further reading as well as a source for exercises.
+

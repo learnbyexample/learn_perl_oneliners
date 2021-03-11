@@ -19,7 +19,7 @@ You should also have prior experience working with command line, `bash` shell an
 * The examples presented here have been tested with **Perl version 5.32.0** and includes features not available in earlier versions.
 * Code snippets shown are copy pasted from **bash** shell and modified for presentation purposes. Some commands are preceded by comments to provide context and explanations. Blank lines have been added to improve readability, only `real` time is shown for speed comparisons and so on.
 * Unless otherwise noted, all examples and explanations are meant for **ASCII** characters
-    * See also [stackoverflow: why does modern perl avoid utf-8 by default](https://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid-utf-8-by-default)
+    * See also [stackoverflow: why does modern perl avoid utf-8 by default](https://stackoverflow.com/q/6162484/4082052)
 * External links are provided for further reading throughout the book. Not necessary to immediately visit them. They have been chosen with care and would help, especially during re-reads.
 * The [learn_perl_oneliners repo](https://github.com/learnbyexample/learn_perl_oneliners) has all the code snippets and files used in examples and exercises and other details related to the book. If you are not familiar with `git` command, click the **Code** button on the webpage to get the files.
 
@@ -62,7 +62,7 @@ Resources mentioned in Acknowledgements section above are available under origin
 
 ## Book version
 
-1.0
+1.5
 
 See [Version_changes.md](https://github.com/learnbyexample/learn_perl_oneliners/blob/main/Version_changes.md) to track changes across book versions.
 
@@ -80,18 +80,18 @@ Here's some one-liners (options will be explained later):
 
 * `perl -pe 's/(?:\x27;\x27|";")(*SKIP)(*F)|;/#/g'` — change `;` to `#` but don't change `;` within single or double quotes
 * `perl -MList::Util=uniq -e 'print uniq <>'` — retain only first copy of duplicated lines, uses built-in module `List::Util`
-* `perl -MRegexp::Common=net -nE 'say join "\n", //g if /$RE{net}{IPv4}/'` — extract only IPv4 addresses, using a third-party [Regexp::Common](https://metacpan.org/pod/Regexp::Common) module
+* `perl -MRegexp::Common=net -nE 'say $& while /$RE{net}{IPv4}/g'` — extract only IPv4 addresses, using a third-party [Regexp::Common](https://metacpan.org/pod/Regexp::Common) module
 * Some stackoverflow Q&A that I've answered over the years with simpler `perl` solution compared to other cli tools
-    * [replace string with incrementing value](https://stackoverflow.com/questions/42554684/shell-replace-string-with-incrementing-value)
-    * [sort rows in csv file without header & first column](https://stackoverflow.com/questions/48920626/sort-rows-in-csv-file-without-header-first-column)
-    * [reverse matched pattern](https://stackoverflow.com/questions/63681983/sed-reverse-matched-pattern)
-    * [append zeros to list](https://stackoverflow.com/questions/49765879/append-zeros-to-list)
-    * [arithmetic replacement in a text file](https://stackoverflow.com/questions/62241101/arithmetic-replacement-in-a-text-file)
-    * [reverse complement DNA sequence for a specific field](https://stackoverflow.com/questions/45571828/execute-bash-command-inside-awk-and-print-command-output)
+    * [replace string with incrementing value](https://stackoverflow.com/q/42554684/4082052)
+    * [sort rows in csv file without header & first column](https://stackoverflow.com/q/48920626/4082052)
+    * [reverse matched pattern](https://stackoverflow.com/q/63681983/4082052)
+    * [append zeros to list](https://stackoverflow.com/q/49765879/4082052)
+    * [arithmetic replacement in a text file](https://stackoverflow.com/q/62241101/4082052)
+    * [reverse complement DNA sequence for a specific field](https://stackoverflow.com/q/45571828/4082052)
 
-The selling point of `perl` over tools like `grep`, `sed` and `awk` includes feature rich regular expression engine and standard/third-party modules. If you don't already know the syntax and idioms for `sed` and `awk`, learning command line options for `perl` would be the easier option. Another advantage is that `perl` is more portable compared to GNU, BSD and Mac implementations of cli tools. The main disadvantage is that `perl` is likely to be slower for features that are supported out of the box by those tools.
+The selling point of `perl` over tools like `grep`, `sed` and `awk` includes feature rich regular expression engine and standard/third-party modules. If you don't already know the syntax and idioms for `sed` and `awk`, learning command line options for `perl` would be the easier option. Another advantage is that `perl` is more portable, given the many differences between GNU, BSD, Mac and other such implementations. The main disadvantage is that `perl` is likely to be verbose and slower for features that are supported out of the box by those tools.
 
->![info](images/info.svg) See also [unix.stackexchange: when to use grep, sed, awk, perl, etc](https://unix.stackexchange.com/questions/303044/when-to-use-grep-less-awk-sed)
+>![info](images/info.svg) See also [unix.stackexchange: when to use grep, sed, awk, perl, etc](https://unix.stackexchange.com/q/303044/109046)
 
 ## Installation and Documentation
 
@@ -260,7 +260,7 @@ bread
 cake
 banana
 
-$ # print lines only if last field is a negative number
+$ # print lines only if the last field is a negative number
 $ # same as: awk '$NF<0' table.txt
 $ perl -lane 'print if $F[-1] < 0' table.txt
 blue cake mug shirt -7
@@ -294,7 +294,7 @@ $ seq 4 | perl -pE 'BEGIN{say "---"} END{say "%%%"}'
 
 When it comes to automation and scripting, you'd often need to construct commands that can accept input from user, file, output of a shell command, etc. As mentioned before, this book assumes `bash` as the shell being used. To access environment variables of the shell, you can use the special hash variable `%ENV` with the name of the environment variable as a string key.
 
->![info](images/info.svg) Quotes won't be used around `hash` keys in this book. See [stackoverflow: are quotes around hash keys a good practice in Perl?](https://stackoverflow.com/questions/401556/are-quotes-around-hash-keys-a-good-practice-in-perl) on possible issues if you don't quote the `hash` keys.
+>![info](images/info.svg) Quotes won't be used around `hash` keys in this book. See [stackoverflow: are quotes around hash keys a good practice in Perl?](https://stackoverflow.com/q/401556/4082052) on possible issues if you don't quote the `hash` keys.
 
 ```bash
 $ # existing environment variable
@@ -305,10 +305,10 @@ $ perl -E 'say $ENV{SHELL}'
 /bin/bash
 
 $ # defined along with perl command
-$ # note that the variable is placed before the shell command
+$ # note that the variable definition is placed before the shell command
 $ word='hello' perl -E 'say $ENV{word}'
 hello
-$ # the input characters are preserved as is
+$ # the characters are preserved as is
 $ ip='hi\nbye' perl -E 'say $ENV{ip}'
 hi\nbye
 ```
@@ -386,7 +386,7 @@ $ perl -e '$nums = qx/seq 3/; print $nums'
 3
 ```
 
->![info](images/info.svg) See also [stackoverflow: difference between backticks, system, and exec](https://stackoverflow.com/questions/799968/whats-the-difference-between-perls-backticks-system-and-exec)
+>![info](images/info.svg) See also [stackoverflow: difference between backticks, system, and exec](https://stackoverflow.com/q/799968/4082052)
 
 ## Summary
 
@@ -617,9 +617,9 @@ ORANGE apple APPLESEED
 
 See also:
 
-* [stackoverflow: reverse complement DNA sequence for a specific field](https://stackoverflow.com/questions/45571828/execute-bash-command-inside-awk-and-print-command-output)
-* [unix.stackexchange: count the number of characters except specific characters](https://unix.stackexchange.com/questions/396584/how-to-count-the-number-of-characters-in-a-line-except-a-specific-character)
-* [unix.stackexchange: scoring DNA data](https://unix.stackexchange.com/questions/428085/scoring-dna-script-file)
+* [stackoverflow: reverse complement DNA sequence for a specific field](https://stackoverflow.com/q/45571828/4082052)
+* [unix.stackexchange: count the number of characters except specific characters](https://unix.stackexchange.com/q/396584/109046)
+* [unix.stackexchange: scoring DNA data](https://unix.stackexchange.com/q/428085/109046)
 
 ## Conditional substitution
 
@@ -686,7 +686,6 @@ $ # quits after an input line containing 'you' is found
 $ perl -ne 'print; exit if /you/' programming_quotes.txt
 Debugging is twice as hard as writing the code in the first place.
 Therefore, if you write the code as cleverly as possible, you are,
-
 $ # matching line won't be printed in this case
 $ perl -pe 'exit if /you/' programming_quotes.txt
 Debugging is twice as hard as writing the code in the first place.
@@ -717,6 +716,7 @@ Any code in `END` block will still be executed before exiting. This doesn't appl
 ```bash
 $ perl -pE 'exit if /cake/' table.txt
 brown bread mat hair 42
+
 $ perl -pE 'exit if /cake/; END{say "bye"}' table.txt
 brown bread mat hair 42
 bye
@@ -793,6 +793,7 @@ You can use range operator to select between pair of matching conditions like li
 
 ```bash
 $ # the range is automatically compared against $. in this context
+$ # same as: perl -ne 'print if 3 <= $. <= 5'
 $ seq 14 25 | perl -ne 'print if 3..5'
 16
 17
@@ -846,18 +847,34 @@ naming things, and off-by-1 errors by Leon Bambrick
 
 ## Working with fixed strings
 
-You can surround a regexp pattern with `\Q` and `\E` to match it as a fixed string, similar to `grep -F` option. `\E` can be left out if there's no further pattern to be specified. If you want to filter a line based on fixed string alone, you can also use the `index` function. See [perldoc: quotemeta](https://perldoc.perl.org/functions/quotemeta) and [perldoc: index](https://perldoc.perl.org/functions/index) for documentation.
+You can surround a regexp pattern with `\Q` and `\E` to match it as a fixed string, similar to `grep -F` option. `\E` can be left out if there's no further pattern to be specified. Variables are still interpolated, so if your fixed string contains `$` or `@` forming possible variables, you'll run into issues. For such cases, you can pass the string as an environment value and then apply `\Q` to that variable. See [perldoc: quotemeta](https://perldoc.perl.org/functions/quotemeta) for documentation.
 
 ```bash
 $ # no match, since [] are character class metacharacters
 $ echo 'int a[5]' | perl -ne 'print if /a[5]/'
 
+$ perl -E 'say "\Qa[5]"'
+a\[5\]
 $ echo 'int a[5]' | perl -ne 'print if /\Qa[5]/'
 int a[5]
 $ echo 'int a[5]' | perl -pe 's/\Qa[5]/b[12]/'
 int b[12]
 
-$ # index returns matching position(starts at 0) and -1 if not found
+$ # $y and $z will be treated as variables here (default value empty string)
+$ echo '$x = $y + $z' | perl -pe 's/\Q$y + $z/100/'
+$x = $y100$z
+$ echo '$x = $y + $z' | fs='$y + $z' perl -pe 's/\Q$ENV{fs}/100/'
+$x = 100
+$ # ENV is preferred since \\ is special in single quoted strings
+$ perl -E '$x = q(x\y\\0z); say $x'
+x\y\0z
+$ x='x\y\\0z' perl -E 'say $ENV{x}'
+x\y\\0z
+```
+
+If you just want to filter a line based on fixed string, you can also use the `index` function. This returns the matching position (which starts with `0`) and `-1` if the given string wasn't found. See [perldoc: index](https://perldoc.perl.org/functions/index) for documentation.
+
+```bash
 $ echo 'int a[5]' | perl -ne 'print if index($_, "a[5]") != -1'
 int a[5]
 ```
@@ -866,8 +883,8 @@ The above `index` example uses double quotes for the string argument, which allo
 
 ```bash
 $ # double quotes allow escape sequences and interpolation
-$ perl -E '$a=5; say "value of a:\t$a"'
-value of a:     5
+$ perl -E '$x=5; say "value of x:\t$x"'
+value of x:     5
 
 $ # use 'q' operator as an alternate to specify single quoted string
 $ s='$a = 2 * ($b + $c)'
@@ -905,7 +922,7 @@ Here's some more examples using the return value of `index` function.
 ```bash
 $ # since 'index' returns '-1' if there's no match,
 $ # you need to add >=0 check as well for < or <= comparison
-$ perl -ne '$i = index($_, "="); print if $i>=0 && $i<=5' eqns.txt
+$ perl -ne '$i = index($_, "="); print if 0 <= $i <= 5' eqns.txt
 a=b,a-b=c,c*d
 
 $ # > or >= comparison is easy to specify
@@ -922,12 +939,11 @@ a.b
 a+b
 $ printf 'a.b\na+b\n' | perl -lne 'print if $_ eq q/a.b/'
 a.b
-
 $ printf '1 a.b\n2 a+b\n' | perl -lane 'print if $F[1] ne q/a.b/'
 2 a+b
 ```
 
-To provide a fixed string in replacement section, environment variable comes in handy again. Or use `q` operator for directly providing the value, but you may have to workaround the delimiters being used.
+To provide a fixed string in replacement section, environment variable comes in handy again. Or use `q` operator for directly providing the value, but you may have to workaround the delimiters being used and presence of `\\` characters.
 
 ```bash
 $ # characters like $ and @ are special in replacement section
@@ -942,11 +958,13 @@ $ # or, use 'e' flag to provide single quoted value as Perl code
 $ echo 'x+y' | perl -pe 's/\Qx+y/q($x+@y)/e'
 $x+@y
 
-$ # need to workaround delimiters with 'q' operator based solution
+$ # need to workaround delimiters and \\ with 'q' operator based solution
 $ echo 'x+y' | perl -pe 's/\Qx+y/q($x\/@y)/e'
 $x/@y
 $ echo 'x+y' | perl -pe 's|\Qx+y|q($x/@y)|e'
 $x/@y
+$ echo 'x+y' | perl -pe 's|\Qx+y|q($x/@y\\\z)|e'
+$x/@y\\z
 ```
 
 ## Summary
@@ -1322,7 +1340,6 @@ To get individual characters, you can use empty argument for the `-F` option.
 ```bash
 $ echo 'apple' | perl -F -anE 'say $F[0]'
 a
-
 $ # -CS option will turn on UTF-8 for stdin/stdout/stderr streams
 $ echo 'fox:αλεπού' | perl -CS -F -anE 'say @F[4..6]'
 αλε
@@ -1331,8 +1348,8 @@ $ echo 'fox:αλεπού' | perl -CS -F -anE 'say @F[4..6]'
 For more information about using `perl` with different encodings, see:
 
 * [perldoc: -C option](https://perldoc.perl.org/perlrun#-C-%5Bnumber/list%5D)
-* [unix.stackexchange: tr with unicode characters](https://unix.stackexchange.com/questions/389615/tr-analog-for-unicode-characters)
-* [stackoverflow: Why does modern Perl avoid UTF-8 by default?](https://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid-utf-8-by-default)
+* [unix.stackexchange: tr with unicode characters](https://unix.stackexchange.com/q/389615/109046)
+* [stackoverflow: Why does modern Perl avoid UTF-8 by default?](https://stackoverflow.com/q/6162484/4082052)
 
 >![warning](images/warning.svg) If the custom field separator with `-F` option doesn't affect the newline character, then the last element can contain the newline character.
 
@@ -1351,13 +1368,12 @@ $ printf 'cat:dog' | perl -F: -anE 'say "[$F[-1]]"'
 [dog]
 ```
 
-The newline character can also show up as the content of last field.
+The newline character can also show up as the entire content of the last field.
 
 ```bash
 $ # both leading and trailing whitespaces are trimmed
 $ echo '  a b   c   ' | perl -anE 'say $#F'
 2
-
 $ # leading empty element won't be removed here
 $ # and last element will have only newline character as its value
 $ echo ':a:b:c:' | perl -F: -anE 'say $#F; say "[$F[-1]]"'
@@ -1519,7 +1535,9 @@ CSE     Amy     67      C
 
 ## Defining field contents instead of using split
 
-The `-F` option uses the `split` function to get field values from input content. In contrast, using `/regexp/g` allows you to define what should the fields be made up of.
+The `-F` option uses the `split` function to get field values from input content. In contrast, using `/regexp/g` allows you to define what should the fields be made up of. Quoting from [perldoc: Global matching](https://perldoc.perl.org/perlretut#Global-matching)
+
+>In list context, `/g` returns a list of matched groupings, or if there are no groupings, a list of matches to the whole regexp.
 
 ```bash
 $ s='Sample123string42with777numbers'
@@ -1552,11 +1570,28 @@ blue
 banana
 ```
 
+As an alternate, you can use `while` loop with `g` flag. Quoting from [perldoc: Global matching](https://perldoc.perl.org/perlretut#Global-matching)
+
+>In scalar context, successive invocations against a string will have `/g` jump from match to match, keeping track of position in the string as it goes along.
+
+```bash
+$ perl -nE 'say $& while /\bm\w*\b/g' table.txt
+mat
+mug
+
+# note that this form isn't suited for priority extraction
+$ perl -nE 'say $& while /\b[bh]\w*\b/g' table.txt
+brown
+bread
+hair
+blue
+banana
+```
+
 A simple `split` fails for `csv` input where fields can contain embedded delimiter characters. For example, a field content `"fox,42"` when `,` is the delimiter.
 
 ```bash
 $ s='eagle,"fox,42",bee,frog'
-
 $ # simply using , as separator isn't sufficient
 $ echo "$s" | perl -F, -lane 'print $F[1]'
 "fox
@@ -1635,7 +1670,7 @@ See also [perldoc: Functions for fixed-length data or records](https://perldoc.p
 
 Having seen command line options and features commonly used for field processing, this section will highlight some of the built-in functions. There's just too many to meaningfully cover them in all in detail, so consider this to be just a brief overview of features. See also [perldoc: Perl Functions by Category](https://perldoc.perl.org/functions#Perl-Functions-by-Category).
 
-First up, the `grep` function that allows you to select fields based on a condition. In scalar context, it returns number of fields that matched the given condition. See [perldoc: grep](https://perldoc.perl.org/functions/grep) for documentation. See also [unix.stackexchange: create lists of words according to binary numbers](https://unix.stackexchange.com/questions/397498/create-lists-of-words-according-to-binary-numbers).
+First up, the `grep` function that allows you to select fields based on a condition. In scalar context, it returns number of fields that matched the given condition. See [perldoc: grep](https://perldoc.perl.org/functions/grep) for documentation. See also [unix.stackexchange: create lists of words according to binary numbers](https://unix.stackexchange.com/q/397498/109046).
 
 ```bash
 $ s='goal:amazing:42:whistle:kwality:3.14'
@@ -1691,7 +1726,6 @@ $ echo "$s" | perl -lane 'print join "\n", map {y/ae/X/r} grep {/^h/} @F'
 hour
 hXnd
 hXXtXd
-
 $ # with 'grep' alone, provided the transformation doesn't affect the condition
 $ # also, @F will be changed here, above map+grep code will not affect @F
 $ echo "$s" | perl -lane 'print join "\n", grep {y/ae/X/; /^h/} @F'
@@ -1724,7 +1758,7 @@ $ echo 'foobar' | perl -F -lane 'print reverse sort @F'
 roofba
 ```
 
-Here's an example with multiple sorting conditions. If the transformation applied for each field is expensive, using [Schwartzian transform](https://en.wikipedia.org/wiki/Schwartzian_transform) can provide a faster result. See also [stackoverflow: multiple sorting conditions](https://stackoverflow.com/questions/45951050/multiple-sorting-by-alphabet-and-hexadecimal-in-perl).
+Here's an example with multiple sorting conditions. If the transformation applied for each field is expensive, using [Schwartzian transform](https://en.wikipedia.org/wiki/Schwartzian_transform) can provide a faster result. See also [stackoverflow: multiple sorting conditions](https://stackoverflow.com/q/45951050/4082052).
 
 ```bash
 $ s='try a bad to good i teal by nice how'
@@ -2392,6 +2426,7 @@ $ echo "$s" | perl -MList::Util=shuffle -lanE 'say join ":", shuffle @F'
 bat:four:dubious:floor:to
 $ echo 'foobar' | perl -MList::Util=shuffle -F -lanE 'say shuffle @F'
 afbroo
+
 $ # similar to shuffle, but can specify number of elements needed
 $ echo "$s" | perl -MList::Util=sample -lanE 'say join ":", sample 2, @F'
 dubious:bat
@@ -2442,7 +2477,7 @@ $ sudo apt install libtext-csv-xs-perl
 
 The above process may fail to work with `perl` version that you manually installed or if a particular module isn't available from your platform repository. There are different options for such cases.
 
-* [stackoverflow: easiest way to install a missing module](https://stackoverflow.com/questions/65865/whats-the-easiest-way-to-install-a-missing-perl-module) shows how to use the `cpan` command and has details for Windows platform too. You might need admin privileges.
+* [stackoverflow: easiest way to install a missing module](https://stackoverflow.com/q/65865/4082052) shows how to use the `cpan` command and has details for Windows platform too. You might need admin privileges.
 * [metacpan: cpanm](https://metacpan.org/pod/cpanm) is also often recommended
 * [metacpan: Carton](https://metacpan.org/pod/Carton) is a Perl module dependency manager (aka Bundler for Perl)
 
@@ -2580,8 +2615,8 @@ $ echo "$s" | cpanel_json_xs
 
 If you need to preserve order, see:
 
-* [stackoverflow: Hash::Ordered versus Tie::IxHash with JSON::XS encode](https://stackoverflow.com/questions/38028559/hashordered-versus-tieixhash-with-jsonxs-encode)
-* [stackoverflow: decode and encode json preserving order](https://stackoverflow.com/questions/51366750/perl-decode-and-encode-json-preserving-order)
+* [stackoverflow: Hash::Ordered versus Tie::IxHash with JSON::XS encode](https://stackoverflow.com/q/38028559/4082052)
+* [stackoverflow: decode and encode json preserving order](https://stackoverflow.com/q/51366750/4082052)
 
 ## Convert one-liners to pretty formatted scripts
 
@@ -2607,7 +2642,9 @@ continue {
 -e syntax OK
 ```
 
-Very useful to debug record separator scripts.
+>![info](images/info.svg) You can use `-MO=qq,Deparse` if you don't want to see the `-e syntax OK` message.
+
+The `Deparse` output is very useful to debug record separator scripts.
 
 ```bash
 $ perl -MO=Deparse -l -0072 -ne 'print if /a/'
@@ -2654,6 +2691,8 @@ brown bread mat hair 42
 yellow banana window shoes 3.14
 ```
 
+>![info](images/info.svg) ![info](images/info.svg) If you have noted the `Deparse` output very carefully, you'll see that the `while` loop has a `LINE` label. So, you can use `next LINE` to move onto the next input record even if you are inside other loops/blocks.
+
 ## Modules to explore
 
 * [Awesome Perl](https://github.com/hachiojipm/awesome-perl) — curated list of awesome Perl5 frameworks, libraries and software
@@ -2661,10 +2700,10 @@ yellow banana window shoes 3.14
 * [metacpan: XML::LibXML](https://metacpan.org/pod/XML::LibXML) — xml/html parsing
 * [metacpan: String::Approx](https://metacpan.org/pod/String::Approx) — fuzzy matching
 * [metacpan: Tie::IxHash](https://metacpan.org/pod/Tie::IxHash) — ordered associative arrays for Perl
-* [unix.stackexchange: example for Algorithm::Combinatorics](https://unix.stackexchange.com/questions/310840/better-solution-for-finding-id-groups-permutations-combinations)
-* [unix.stackexchange: example for Text::ParseWords](https://unix.stackexchange.com/questions/319301/excluding-enclosed-delimiters-with-cut)
-* [unix.stackexchange: sort words by syllable count using Lingua::EN::Syllable](https://unix.stackexchange.com/questions/280492/how-do-i-sort-words-by-syllable-count)
-* [stackoverflow: regular expression modules](https://stackoverflow.com/questions/3258847/what-are-good-perl-pattern-matching-regex-modules)
+* [unix.stackexchange: example for Algorithm::Combinatorics](https://unix.stackexchange.com/q/310840/109046)
+* [unix.stackexchange: example for Text::ParseWords](https://unix.stackexchange.com/q/319301/109046)
+* [unix.stackexchange: sort words by syllable count using Lingua::EN::Syllable](https://unix.stackexchange.com/q/280492/109046)
+* [stackoverflow: regular expression modules](https://stackoverflow.com/q/3258847/4082052)
 
 ## Summary
 
@@ -2749,7 +2788,7 @@ $ perl -nE 'say "$#ARGV: " . join ",", @ARGV' f[12].txt table.txt
 -1: 
 ```
 
->![info](images/info.svg) See also [stackoverflow: referencing filename passed as arguments](https://stackoverflow.com/questions/9151243/perl-one-liner-how-to-reference-the-filename-passed-in-when-ne-or-pe-commandl) for more details about `@ARGV` behavior when `-n` or `-p` switch is active.
+>![info](images/info.svg) See also [stackoverflow: referencing filename passed as arguments](https://stackoverflow.com/q/9151243/4082052) for more details about `@ARGV` behavior when `-n` or `-p` switch is active.
 
 From [perldoc: $ARGV](https://perldoc.perl.org/variables/$ARGV):
 
@@ -2787,7 +2826,7 @@ Here's some more examples.
 
 ```bash
 $ # same as: awk 'FNR==2{print; nextfile}' greeting.txt table.txt
-$ perl -ne 'print if $.==2; close ARGV if eof' greeting.txt table.txt
+$ perl -ne 'print and close ARGV if $.==2' greeting.txt table.txt
 Have a nice day
 blue cake mug shirt -7
 
@@ -2960,7 +2999,7 @@ programming language
     * `2 && 2` --> evaluates to `true` and `$n` becomes `1`
     * `1 && 1` --> evaluates to `true` and `$n` becomes `0`
     * ``0 &&  `` --> evaluates to `false` and `$n` doesn't change
-* Note that when conditionals are connected with logical `&&`, the right expression will not be executed at all if the left one turns out to be `false` because the overall result will always be `false`. Same is the case if left expression evaluates to `true` with logical `||` operator. Such logical operators are also known as **short-circuit** operators. Thus, in the above case, `$n--` won't be executed when `$n` is `0` on the left hand side. This prevents `$n` going negative and `$n && $n--` will never become `true` unless `$n` is assigned again.
+* Note that when conditionals are connected with logical `&&`, the second expression will not be executed at all if the first one turns out to be `false` because the overall result will always be `false`. Same is the case if the first expression evaluates to `true` with logical `||` operator. Such logical operators are also known as **short-circuit** operators. Thus, in the above case, `$n--` won't be executed when `$n` is `0` on the left hand side. This prevents `$n` going negative and `$n && $n--` will never become `true` unless `$n` is assigned again.
 
 ```bash
 $ # same as: grep --no-group-separator -A1 'blue'
@@ -3187,7 +3226,7 @@ par,far,mar,tar
 
 Instead of working with all the groups (or blocks) bound by the markers, this section will discuss how to choose blocks based on some additional criteria.
 
-Here's how you can process only the first matching block. See also [stackoverflow: copy pattern between range only once](https://stackoverflow.com/questions/38481155/sed-copy-pattern-between-range-only-once) and [stackoverflow: extract only first range](https://stackoverflow.com/questions/63072851/how-to-extract-only-the-first-instance-of-a-number-of-lines-between-two-strings/63072979#63072979).
+Here's how you can process only the first matching block. See also [stackoverflow: copy pattern between range only once](https://stackoverflow.com/q/38481155/4082052) and [stackoverflow: extract only first range](https://stackoverflow.com/a/63072979/4082052).
 
 ```bash
 $ perl -ne '$f=1 if /start/; print if $f; exit if /end/' uniform.txt
@@ -3195,7 +3234,6 @@ $ perl -ne '$f=1 if /start/; print if $f; exit if /end/' uniform.txt
 1234
 6789
 **end 1**
-
 $ # use other tricks discussed in previous section as needed
 $ perl -ne 'exit if /end/; print if $f; $f=1 if /start/' uniform.txt
 1234
@@ -3586,7 +3624,7 @@ ECE     Om      92
 CSE     Amy     67
 ```
 
-For multiple field comparison, you can use comma separated values to construct the hash keys. The special variable `$;` (whose default is `\034`) will be used to join these values. The `\034` character is usually not present in text files. If you cannot guarantee absence of this character, you can use some other character or use hash of hashes. See also [stackoverflow: using array as hash key](https://stackoverflow.com/questions/17081212/create-a-perl-hash-with-an-array-as-the-key).
+For multiple field comparison, you can use comma separated values to construct the hash keys. The special variable `$;` (whose default is `\034`) will be used to join these values. The `\034` character is usually not present in text files. If you cannot guarantee absence of this character, you can use some other character or use hash of hashes. See also [stackoverflow: using array as hash key](https://stackoverflow.com/q/17081212/4082052).
 
 ```bash
 $ cat dept_name.txt
@@ -3679,7 +3717,7 @@ Have a nice day
 Here's an example where two files are processed simultaneously.
 
 ```bash
-$ # print line from greeting.txt if last column of corresponding line
+$ # print line from greeting.txt if the last column of corresponding line
 $ # from table.txt is a positive number
 $ perl -ne 'print if (split " ", <STDIN>)[-1] > 0' <table.txt greeting.txt
 Hi there
@@ -3703,7 +3741,7 @@ wise ice go goa
 yellow banana window shoes 3.14
 ```
 
->![warning](images/warning.svg) Don't save contents of `search.txt` and `repl.txt` in shell variables for passing them to the `perl` script. Trailing newlines and ASCII NUL characters will cause issues. See [stackoverflow: pitfalls of reading file into shell variable](https://stackoverflow.com/questions/7427262/how-to-read-a-file-into-a-variable-in-shell/22607352#22607352) for details.
+>![warning](images/warning.svg) Don't save contents of `search.txt` and `repl.txt` in shell variables for passing them to the `perl` script. Trailing newlines and ASCII NUL characters will cause issues. See [stackoverflow: pitfalls of reading file into shell variable](https://stackoverflow.com/a/22607352/4082052) for details.
 
 ## Add file content conditionally
 
@@ -4032,4 +4070,209 @@ true blue
 hehe bebe
 tru eblue
 ```
+
+# Perl rename command
+
+This chapter will show a few examples for renaming files using the `rename` command. There are several implementations for this particular command. So, check `man rename` to see if you get the Perl based `rename` documentation as shown below:
+
+```bash
+NAME
+       rename - renames multiple files
+
+SYNOPSIS
+       rename [ -h|-m|-V ] [ -v ] [ -0 ] [ -n ] [ -f ] [ -d ]
+       [ -e|-E perlexpr]*|perlexpr [ files ]
+
+DESCRIPTION
+       "rename" renames the filenames supplied according to the rule
+       specified as the first argument.  The perlexpr argument is a
+       Perl expression which is expected to modify the $_ string in
+       Perl for at least some of the filenames specified.  If a given
+       filename is not modified by the expression, it will not be
+       renamed.  If no filenames are given on the command line,
+       filenames will be read via standard input.
+```
+
+If you don't have the command installed, check your distribution's repository or you can install it from [metacpan: File::Rename](https://metacpan.org/pod/distribution/File-Rename/rename.PL). Here's a couple of implementations on my system:
+
+```bash
+$ rename --version
+/usr/bin/rename using File::Rename version 1.10
+
+$ rename.ul --version
+rename.ul from util-linux 2.34
+```
+
+>![info](images/info.svg) See also: [askubuntu: What's the difference between the different "rename" commands?](https://askubuntu.com/questions/956010/whats-the-difference-between-the-different-rename-commands)
+
+>![info](images/info.svg) See also [F2: a cross-platform tool for batch renaming files and directories quickly and safely](https://github.com/ayoisaiah/f2)
+
+## Basic example and sanity check
+
+>![info](images/info.svg) For this chapter, use an empty folder to follow along the examples presented. Delete the created files before moving on to the next illustration.
+
+The below example formats the filenames to consistently have three digits, so that the sorted filename display works for the numbers as well. The `-n` option allows you to do a sanity check without renaming the files.
+
+```bash
+$ touch 1.png 3.png 25.png 100.png
+$ ls
+100.png  1.png  25.png  3.png
+
+$ # sanity check
+$ # note that 100.png isn't part of the output, since it isn't affected
+$ rename -n 's/\d+/sprintf "%03d", $&/e' *.png
+rename(1.png, 001.png)
+rename(25.png, 025.png)
+rename(3.png, 003.png)
+
+$ # remove -n option after sanity check to actually rename the files
+$ rename 's/\d+/sprintf "%03d", $&/e' *.png
+$ ls
+001.png  003.png  025.png  100.png
+
+$ rm *.png
+```
+
+>![info](images/info.svg) For a more pleasing visual of the sanity check, pipe the output to `column -ts,` as shown below (assuming filenames don't have comma in them).
+
+```bash
+$ rename -n 's/\d+/sprintf "%03d", $&/e' *.png | column -ts,
+rename(1.png    001.png)
+rename(25.png   025.png)
+rename(3.png    003.png)
+```
+
+## Verbose mode
+
+The `-v` option shows how the files have been renamed, similar to the `-n` option. The difference is that the `-v` option shows the result after the files have been renamed.
+
+```bash
+$ touch a.b.c.d.txt 1.2.3.txt
+
+$ # replace all dot characters except the extension
+$ # sanity check
+$ rename -n 's/\.(?=.*\.)/_/g' *.txt
+rename(1.2.3.txt, 1_2_3.txt)
+rename(a.b.c.d.txt, a_b_c_d.txt)
+$ # verbose mode
+$ rename -v 's/\.(?=.*\.)/_/g' *.txt
+1.2.3.txt renamed as 1_2_3.txt
+a.b.c.d.txt renamed as a_b_c_d.txt
+
+$ ls
+1_2_3.txt  a_b_c_d.txt
+
+$ rm *.txt
+```
+
+## File already exists
+
+If a renaming operation matches a filename that already exists, such a renaming won't go through by default. You can override this behavior by using the `-f` option.
+
+```bash
+$ touch report_v1.log report_v2.log
+
+$ rename 's/v1/v2/' report_v1.log
+report_v1.log not renamed: report_v2.log already exists
+$ ls
+report_v1.log  report_v2.log
+
+$ rename -f 's/v1/v2/' report_v1.log
+$ ls
+report_v2.log
+
+$ rm *.log
+```
+
+## Rename only filename component
+
+If you are passing filenames with path components in them, you can use `-d` option to affect only filename portion. Otherwise, the logic you are using might affect directory names as well.
+
+```bash
+$ mkdir scripts
+$ touch scripts/{toc.sh,reports.py}
+
+$ # uppercase first character of the filename
+$ rename -n -d 's/./\u$&/' scripts/*
+rename(scripts/reports.py, scripts/Reports.py)
+rename(scripts/toc.sh, scripts/Toc.sh)
+
+$ # without -d option, directory name is affected
+$ rename -n 's/./\u$&/' scripts/*
+rename(scripts/reports.py, Scripts/reports.py)
+rename(scripts/toc.sh, Scripts/toc.sh)
+
+$ rm -r scripts
+```
+
+## Incrementing numbers
+
+Unlike the normal `perl` one-liners, the `rename` command allows only `strict` mode. So, you'll have to declare variables before using them. However, you can cheat a little by using the `$a` and `$b` global variables (see [stackoverflow: Where do the $a and $b variables come from?](https://stackoverflow.com/q/26127617/4082052) for details).
+
+The below example replaces first occurrence of numbers in the filename with an incrementing sequence.
+
+```bash
+$ touch 1.png 3.png 25.png 100.png
+
+$ rename -n 's/\d+/sprintf "%03d", ++$a/e' *.png
+rename(100.png, 001.png)
+rename(1.png, 002.png)
+rename(25.png, 003.png)
+rename(3.png, 004.png)
+
+$ rm *.png
+```
+
+However, the above approach can lead to issues if a number already exists. You cannot use `-f` option, since that'll lead to the file being overwritten instead of just being renamed. An example of such a problem is shown below.
+
+```bash
+$ touch 1.png 3.png 25.png 100.png
+
+$ rename -n 's/\d+/++$a/e' *.png
+100.png not renamed: 1.png already exists
+rename(1.png, 2.png)
+25.png not renamed: 3.png already exists
+rename(3.png, 4.png)
+
+# OOPS, 2 files have disappeared!!
+$ rename -f 's/\d+/++$a/e' *.png
+$ ls
+2.png  4.png
+
+$ rm *.png
+```
+
+One of the ways to solve this issue is a two step process shown below. An extra unique string is added to the filenames, so that it cannot clash with existing filenames. The unique string is then removed afterwards.
+
+```bash
+$ touch 1.png 3.png 25.png 100.png
+
+$ rename -n 's/\d+/"op_" . ++$a/e' *.png
+rename(100.png, op_1.png)
+rename(1.png, op_2.png)
+rename(25.png, op_3.png)
+rename(3.png, op_4.png)
+
+$ rename 's/\d+/"op_" . ++$a/e' *.png
+$ rename 's/op_//' *.png
+
+$ ls
+1.png  2.png  3.png  4.png
+
+$ rm *.png
+```
+
+## Exercises
+
+**a)** Determine and implement the rename logic based on the filenames and expected output shown below.
+
+```bash
+$ touch ' (2020) Report part 1 . txt ' 'analysis Part 3 (2018).log'
+
+##### add your solution here
+$ ls
+2020_report_part_1.txt  analysis_part_3_2018.log
+```
+
+**b)** See [unix.stackexchange: rename Q&A sorted by votes](https://unix.stackexchange.com/questions/tagged/rename?tab=Votes) for further reading as well as a source for exercises.
 

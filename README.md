@@ -56,6 +56,7 @@ Twitter: https://twitter.com/learn_byexample
 9) Processing multiple records
 10) Two file processing
 11) Dealing with duplicates
+12) Perl rename command
 
 <br>
 

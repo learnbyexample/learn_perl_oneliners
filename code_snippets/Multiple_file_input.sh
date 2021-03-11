@@ -10,7 +10,7 @@ perl -ne 'print "--- $ARGV ---\n" if $. == 1;
 
 perl -ne 'print if eof' greeting.txt table.txt
 
-perl -ne 'print if $.==2; close ARGV if eof' greeting.txt table.txt
+perl -ne 'print and close ARGV if $.==2' greeting.txt table.txt
 
 perl -pe 'close ARGV if $.>=1' greeting.txt table.txt
 

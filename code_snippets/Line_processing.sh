@@ -119,13 +119,23 @@ perl -ne 'print if /affect/ .. /XYZ/' programming_quotes.txt
 
 echo 'int a[5]' | perl -ne 'print if /a[5]/'
 
+perl -E 'say "\Qa[5]"'
+
 echo 'int a[5]' | perl -ne 'print if /\Qa[5]/'
 
 echo 'int a[5]' | perl -pe 's/\Qa[5]/b[12]/'
 
+echo '$x = $y + $z' | perl -pe 's/\Q$y + $z/100/'
+
+echo '$x = $y + $z' | fs='$y + $z' perl -pe 's/\Q$ENV{fs}/100/'
+
+perl -E '$x = q(x\y\\0z); say $x'
+
+x='x\y\\0z' perl -E 'say $ENV{x}'
+
 echo 'int a[5]' | perl -ne 'print if index($_, "a[5]") != -1'
 
-perl -E '$a=5; say "value of a:\t$a"'
+perl -E '$x=5; say "value of x:\t$x"'
 
 s='$a = 2 * ($b + $c)'
 
@@ -140,7 +150,7 @@ s='a+b' perl -ne 'print if index($_, $ENV{s})==0' eqns.txt
 s='a+b' perl -lne '$pos = length() - length($ENV{s});
                    print if index($_, $ENV{s}) == $pos' eqns.txt
 
-perl -ne '$i = index($_, "="); print if $i>=0 && $i<=5' eqns.txt
+perl -ne '$i = index($_, "="); print if 0 <= $i <= 5' eqns.txt
 
 s='a+b' perl -ne 'print if index($_, $ENV{s})>=1' eqns.txt
 
@@ -159,4 +169,6 @@ echo 'x+y' | perl -pe 's/\Qx+y/q($x+@y)/e'
 echo 'x+y' | perl -pe 's/\Qx+y/q($x\/@y)/e'
 
 echo 'x+y' | perl -pe 's|\Qx+y|q($x/@y)|e'
+
+echo 'x+y' | perl -pe 's|\Qx+y|q($x/@y\\\z)|e'
 

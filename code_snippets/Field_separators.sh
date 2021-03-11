@@ -115,6 +115,10 @@ perl -nE 'say join "\n", //g if /\bm\w*\b/' table.txt
 
 perl -nE 'say join "\n", //g if /\bh\w*\b/ || /\bb\w*\b/' table.txt
 
+perl -nE 'say $& while /\bm\w*\b/g' table.txt
+
+perl -nE 'say $& while /\b[bh]\w*\b/g' table.txt
+
 s='eagle,"fox,42",bee,frog'
 
 echo "$s" | perl -F, -lane 'print $F[1]'
