@@ -18,10 +18,10 @@ See [Version_changes.md](./Version_changes.md) to keep track of changes made to 
 
 You can purchase the book using these links:
 
-* https://gumroad.com/l/perl-oneliners
+* https://learnbyexample.gumroad.com/l/perl-oneliners
 * https://leanpub.com/perl-oneliners
 * You can also get the book as part of **Magical one-liners** bundle from
-    * https://gumroad.com/l/oneliners
+    * https://learnbyexample.gumroad.com/l/oneliners
     * https://leanpub.com/b/oneliners
 * See https://learnbyexample.github.io/books/ for list of other books
 
@@ -35,7 +35,9 @@ For web version of the book, visit https://learnbyexample.github.io/learn_perl_o
 
 # Feedback
 
-Please open an issue if you spot any typo/errors.
+Please [open an issue](https://github.com/learnbyexample/learn_perl_oneliners/issues) if you spot any typo/errors.
+
+⚠️ ⚠️ Please DO NOT submit pull requests. Main reason being any modification requires changes in multiple places.
 
 I'd also highly appreciate your feedback about the book.
 
