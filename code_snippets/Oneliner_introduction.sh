@@ -54,33 +54,33 @@ word='hello' perl -E 'say $ENV{word}'
 
 ip='hi\nbye' perl -E 'say $ENV{ip}'
 
-cat word_anchors.txt
+cat anchors.txt
 
 r='\Bpar\B'
 
-rgx="$r" perl -ne 'print if /$ENV{rgx}/' word_anchors.txt
+rgx="$r" perl -ne 'print if /$ENV{rgx}/' anchors.txt
 
 r='\Bpar\B'
 
-perl -sne 'print if /$rgx/' -- -rgx="$r" word_anchors.txt
+perl -sne 'print if /$rgx/' -- -rgx="$r" anchors.txt
 
 ## Executing external commands
 
 perl -e 'system("echo Hello World")'
 
-perl -e 'system("wc -w <word_anchors.txt")'
+perl -e 'system("wc -w <anchors.txt")'
 
 perl -e 'system("seq -s, 10 > out.txt")'
 
 cat out.txt
 
-perl -E '$es=system("ls word_anchors.txt"); say $es'
+perl -E '$es=system("ls anchors.txt"); say $es'
 
-perl -E 'system("ls word_anchors.txt"); say $?'
+perl -E 'system("ls anchors.txt"); say $?'
 
 perl -E 'system("ls xyz.txt"); say $?'
 
-perl -e '$words = `wc -w <word_anchors.txt`; print $words'
+perl -e '$words = `wc -w <anchors.txt`; print $words'
 
 perl -e '$nums = qx/seq 3/; print $nums'
 

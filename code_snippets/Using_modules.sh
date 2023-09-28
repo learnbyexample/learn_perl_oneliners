@@ -10,7 +10,7 @@ s='floor bat to dubious four'
 
 echo "$s" | perl -MList::Util=shuffle -lanE 'say join ":", shuffle @F'
 
-echo 'foobar' | perl -MList::Util=shuffle -F -lanE 'say shuffle @F'
+echo 'dragon' | perl -MList::Util=shuffle -F -lanE 'say shuffle @F'
 
 echo "$s" | perl -MList::Util=sample -lanE 'say join ":", sample 2, @F'
 

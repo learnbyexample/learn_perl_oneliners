@@ -1,39 +1,39 @@
 ## Comparing records
 
-cat color_list1.txt
+cat colors_1.txt
 
-cat color_list2.txt
-
-perl -ne 'if(!$#ARGV){$h{$_}=1; next}
-          print if exists $h{$_}' color_list1.txt color_list2.txt
+cat colors_2.txt
 
 perl -ne 'if(!$#ARGV){$h{$_}=1; next}
-          print if !exists $h{$_}' color_list1.txt color_list2.txt
+          print if exists $h{$_}' colors_1.txt colors_2.txt
 
 perl -ne 'if(!$#ARGV){$h{$_}=1; next}
-          print if !exists $h{$_}' color_list2.txt color_list1.txt
+          print if !exists $h{$_}' colors_1.txt colors_2.txt
+
+perl -ne 'if(!$#ARGV){$h{$_}=1; next}
+          print if !exists $h{$_}' colors_2.txt colors_1.txt
 
 perl -ne 'if(!$#ARGV){ $h{$_}=1 }
-          else{ print if exists $h{$_} }' color_list1.txt color_list2.txt
+          else{ print if exists $h{$_} }' colors_1.txt colors_2.txt
 
 perl -ne 'BEGIN{ $h{$_}=1 while <STDIN> }
-          print if exists $h{$_}' <color_list1.txt color_list2.txt
+          print if exists $h{$_}' <colors_1.txt colors_2.txt
 
 ## Using modules for set operations
 
-perl -MList::Util=uniq -e 'print uniq <>' color_list1.txt color_list2.txt
+perl -MList::Util=uniq -e 'print uniq <>' colors_1.txt colors_2.txt
 
 perl -MList::Compare -e '@a1=<STDIN>; @a2=<>;
        print List::Compare->new(\@a1, \@a2)->get_union
-      ' <color_list1.txt color_list2.txt
+      ' <colors_1.txt colors_2.txt
 
 perl -MList::Compare -e '@a1=<STDIN>; @a2=<>;
        print List::Compare->new(\@a1, \@a2)->get_intersection
-      ' <color_list1.txt color_list2.txt
+      ' <colors_1.txt colors_2.txt
 
 perl -MList::Compare -e '@a1=<STDIN>; @a2=<>;
        print List::Compare->new(\@a1, \@a2)->get_unique      
-      ' <color_list1.txt color_list2.txt
+      ' <colors_1.txt colors_2.txt
 
 ## Comparing fields
 
@@ -68,7 +68,7 @@ perl -lane 'if(!$#ARGV){ $r{$F[0]}=$F[1]; $.=0 }
             else{ print join "\t", @F, $.==1 ? "Role" : $r{$F[1]} }
            ' role.txt marks.txt
 
-## Based on line number
+## Based on line numbers
 
 perl -pe 'BEGIN{ $m=3; $n=2; $s = <STDIN> for 1..$n }
           $_ = $s if $. == $m' <greeting.txt table.txt

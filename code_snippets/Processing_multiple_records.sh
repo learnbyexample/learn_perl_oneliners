@@ -1,10 +1,10 @@
 ## Processing consecutive records
 
-perl -ne 'print $p, $_ if /not/ && $p=~/as/; $p = $_' programming_quotes.txt
+perl -ne 'print $p, $_ if /you/ && $p=~/he/; $p = $_' para.txt
 
-perl -ne 'print $p if /not/ && $p=~/as/; $p = $_' programming_quotes.txt
+perl -ne 'print $p if /you/ && $p=~/he/; $p = $_' para.txt
 
-perl -ne 'print if /not/ && $p=~/as/; $p = $_' programming_quotes.txt
+perl -ne 'print if /you/ && $p=~/he/; $p = $_' para.txt
 
 ## Context matching
 

@@ -1,14 +1,12 @@
 # Exercises
 
->![info](../images/info.svg) Exercise related files are available from [exercises folder of learn_perl_oneliners repo](https://github.com/learnbyexample/learn_perl_oneliners/tree/main/exercises).
-
->![info](../images/info.svg) To see the solutions, visit [Exercise_solutions.md](https://github.com/learnbyexample/learn_perl_oneliners/blob/main/exercises/Exercise_solutions.md).
+>![info](../images/info.svg) For solutions, see [Exercise_solutions.md](https://github.com/learnbyexample/learn_perl_oneliners/blob/main/exercises/Exercise_solutions.md).
 
 <br>
 
 # One-liner introduction
 
-**a)** For the input file `ip.txt`, display all lines containing `is`.
+**1)** For the input file `ip.txt`, display all lines containing `is`.
 
 ```bash
 $ cat ip.txt
@@ -24,7 +22,7 @@ This game is good
 Today is sunny
 ```
 
-**b)** For the input file `ip.txt`, display first field of lines *not* containing `y`. Consider space as the field separator for this file.
+**2)** For the input file `ip.txt`, display the first field of lines *not* containing `y`. Consider space as the field separator for this file.
 
 ```bash
 ##### add your solution here
@@ -33,7 +31,7 @@ This
 12345
 ```
 
-**c)** For the input file `ip.txt`, display all lines containing no more than 2 fields.
+**3)** For the input file `ip.txt`, display all lines containing no more than 2 fields.
 
 ```bash
 ##### add your solution here
@@ -41,14 +39,14 @@ Hello World
 12345
 ```
 
-**d)** For the input file `ip.txt`, display all lines containing `is` in the second field.
+**4)** For the input file `ip.txt`, display all lines containing `is` in the second field.
 
 ```bash
 ##### add your solution here
 Today is sunny
 ```
 
-**e)** For each line of the input file `ip.txt`, replace first occurrence of `o` with `0`.
+**5)** For each line of the input file `ip.txt`, replace the first occurrence of `o` with `0`.
 
 ```bash
 ##### add your solution here
@@ -60,7 +58,7 @@ T0day is sunny
 Y0u are funny
 ```
 
-**f)** For the input file `table.txt`, calculate and display the product of numbers in the last field of each line. Consider space as the field separator for this file.
+**6)** For the input file `table.txt`, calculate and display the product of numbers in the last field of each line. Consider space as the field separator for this file.
 
 ```bash
 $ cat table.txt
@@ -72,16 +70,17 @@ yellow banana window shoes 3.14
 -923.16
 ```
 
-**g)** Append `.` to all the input lines for the given `stdin` data.
+**7)** Append `.` to all the input lines for the given stdin data.
 
 ```bash
-$ printf 'last\nappend\nstop\n' | ##### add your solution here
+$ printf 'last\nappend\nstop\ntail\n' | ##### add your solution here
 last.
 append.
 stop.
+tail.
 ```
 
-**h)** Use contents of `s` variable to display all matching lines from the input file `ip.txt`. Assume that `s` doesn't have any regexp metacharacters. Construct the solution such that there's at least one word character immediately preceding the contents of `s` variable.
+**8)** Use the contents of the `s` variable to display all matching lines from the input file `ip.txt`. Assume that `s` doesn't have any regexp metacharacters. Construct the solution such that there's at least one word character immediately preceding the contents of the `s` variable.
 
 ```bash
 $ s='is'
@@ -90,7 +89,7 @@ $ s='is'
 This game is good
 ```
 
-**i)** Use `system` to display contents of filename present in second field (space separated) of the given input line.
+**9)** Use `system` to display the contents of the filename present in the second field of the given input line. Consider space as the field separator.
 
 ```bash
 $ s='report.log ip.txt sorted.txt'
@@ -113,7 +112,7 @@ yellow banana window shoes 3.14
 
 # Line processing
 
-**a)** Remove only the third line of given input.
+**1)** For the given input, display except the third line.
 
 ```bash
 $ seq 34 37 | ##### add your solution here
@@ -122,7 +121,7 @@ $ seq 34 37 | ##### add your solution here
 37
 ```
 
-**b)** Display only fourth, fifth, sixth and seventh lines for the given input.
+**2)** Display only the fourth, fifth, sixth and seventh lines for the given input.
 
 ```bash
 $ seq 65 78 | ##### add your solution here
@@ -132,7 +131,7 @@ $ seq 65 78 | ##### add your solution here
 71
 ```
 
-**c)** For the input file `ip.txt`, replace all occurrences of `are` with `are not` and `is` with `is not` only from line number **4** till end of file. Also, only the lines that were changed should be displayed in the output.
+**3)** For the input file `ip.txt`, replace all occurrences of `are` with `are not` and `is` with `is not` only from line number **4** till the end of file. Also, only the lines that were changed should be displayed in the output.
 
 ```bash
 $ cat ip.txt
@@ -148,7 +147,7 @@ Today is not sunny
 You are not funny
 ```
 
-**d)** For the given `stdin`, display only the first three lines. Avoid processing lines that are not relevant.
+**4)** For the given stdin, display only the first three lines. Avoid processing lines that are not relevant.
 
 ```bash
 $ seq 14 25 | ##### add your solution here
@@ -157,7 +156,7 @@ $ seq 14 25 | ##### add your solution here
 16
 ```
 
-**e)** For the input file `ip.txt`, display all lines from start of the file till the first occurrence of `game`.
+**5)** For the input file `ip.txt`, display all lines from the start of the file till the first occurrence of `game`.
 
 ```bash
 ##### add your solution here
@@ -166,14 +165,14 @@ How are you
 This game is good
 ```
 
-**f)** For the input file `ip.txt`, display all lines that contain `is` but not `good`.
+**6)** For the input file `ip.txt`, display all lines that contain `is` but not `good`.
 
 ```bash
 ##### add your solution here
 Today is sunny
 ```
 
-**g)** For the input file `ip.txt`, extract the word before the whole word `is` as well as the word after it. If such a match is found, display the two words around `is` in reversed order. For example, `hi;1 is--234 bye` should be converted to `234:1`. Assume that whole word `is` will not be present more than once in a single line.
+**7)** For the input file `ip.txt`, extract the word before the whole word `is` as well as the word after it. If such a match is found, display the two words around `is` in reversed order. For example, `hi;1 is--234 bye` should be converted to `234:1`. Assume that the whole word `is` will not be present more than once in a single line.
 
 ```bash
 ##### add your solution here
@@ -181,16 +180,21 @@ good:game
 sunny:Today
 ```
 
-**h)** For the given input string, replace `0xA0` with `0x7F` and `0xC0` with `0x1F`.
+**8)** For the input file `hex.txt`, replace all occurrences of `0xA0` with `0x50` and `0xFF` with `0x7F`.
 
 ```bash
-$ s='start address: 0xA0, func1 address: 0xC0'
+$ cat hex.txt
+start: 0xA0, func1: 0xA0
+end: 0xFF, func2: 0xB0
+restart: 0xA010, func3: 0x7F
 
-$ echo "$s" | ##### add your solution here
-start address: 0x7F, func1 address: 0x1F
+##### add your solution here
+start: 0x50, func1: 0x50
+end: 0x7F, func2: 0xB0
+restart: 0x5010, func3: 0x7F
 ```
 
-**i)** Find the starting index of first occurrence of `is` or `the` or `was` or `to` for each input line of the file `idx.txt`. Assume all input lines will match at least one of these terms.
+**9)** Find the starting index of the first occurrence of `is` or `the` or `was` or `to` for each input line of the file `idx.txt`. Assume that every input line will match at least one of these terms.
 
 ```bash
 $ cat idx.txt
@@ -206,7 +210,7 @@ you were there to see?
 9
 ```
 
-**j)** Display all lines containing `[4]*` for the given `stdin` data.
+**10)** Display all lines containing `[4]*` for the given stdin data.
 
 ```bash
 $ printf '2.3/[4]*6\n2[4]5\n5.3-[4]*9\n' | ##### add your solution here
@@ -214,7 +218,7 @@ $ printf '2.3/[4]*6\n2[4]5\n5.3-[4]*9\n' | ##### add your solution here
 5.3-[4]*9
 ```
 
-**k)** For the given input string, replace all lowercase alphabets to `x` only for words starting with `m`.
+**11)** For the given input string, replace all lowercase alphabets to `x` only for words starting with `m`.
 
 ```bash
 $ s='ma2T3a a2p kite e2e3m meet'
@@ -222,7 +226,7 @@ $ echo "$s" | ##### add your solution here
 xx2T3x a2p kite e2e3m xxxx
 ```
 
-**l)** For the input file `ip.txt`, delete all characters other than lowercase vowels and newline character. Perform this transformation only between a line containing `you` up to line number `4` (inclusive).
+**12)** For the input file `ip.txt`, delete all characters other than lowercase vowels and the newline character. Perform this transformation only between a line containing `you` up to line number `4` (inclusive).
 
 ```bash
 ##### add your solution here
@@ -234,11 +238,103 @@ oaiu
 You are funny
 ```
 
+**13)** For the input file `sample.txt`, display from the start of the file till the first occurrence of `are`, excluding the matching line.
+
+```bash
+$ cat sample.txt
+Hello World
+
+Good day
+How are you
+
+Just do-it
+Believe it
+
+Today is sunny
+Not a bit funny
+No doubt you like it too
+
+Much ado about nothing
+He he he
+
+##### add your solution here
+Hello World
+
+Good day
+```
+
+**14)** For the input file `sample.txt`, display from the last occurrence of `do` till the end of the file.
+
+```bash
+##### add your solution here
+Much ado about nothing
+He he he
+```
+
+**15)** For the input file `sample.txt`, display from the 9th line till a line containing `you`.
+
+```bash
+##### add your solution here
+Today is sunny
+Not a bit funny
+No doubt you like it too
+```
+
+**16)** Display only the odd numbered lines from `ip.txt`.
+
+```bash
+##### add your solution here
+Hello World
+This game is good
+12345
+```
+
+**17)** For the `table.txt` file, print only the line number for lines containing `air` or `win`.
+
+```bash
+$ cat table.txt
+brown bread mat hair 42
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+
+##### add your solution here
+1
+3
+```
+
+**18)** For the input file `table.txt`, calculate the sum of numbers in the last column, excluding the second line.
+
+```bash
+##### add your solution here
+45.14
+```
+
+**19)** Print the second and fourth line for every block of five lines.
+
+```bash
+$ seq 15 | ##### add your solution here
+2
+4
+7
+9
+12
+14
+```
+
+**20)** For the input file `ip.txt`, display all lines containing `e` or `u` but not both.
+
+```bash
+##### add your solution here
+Hello World
+This game is good
+Today is sunny
+```
+
 <br>
 
 # In-place file editing
 
-**a)** For the input file `text.txt`, replace all occurrences of `in` with `an` and write back the changes to `text.txt` itself. The original contents should get saved to `text.txt.orig`
+**1)** For the input file `text.txt`, replace all occurrences of `in` with `an` and write back the changes to `text.txt` itself. The original contents should get saved to `text.txt.orig`
 
 ```bash
 $ cat text.txt
@@ -255,7 +351,7 @@ can ran want plant
 tin fin fit mine line
 ```
 
-**b)** For the input file `text.txt`, replace all occurrences of `an` with `in` and write back the changes to `text.txt` itself. Do not create backups for this exercise. Note that you should have solved the previous exercise before starting this one.
+**2)** For the input file `text.txt`, replace all occurrences of `an` with `in` and write back the changes to `text.txt` itself. Do not create backups for this exercise. Note that you should have solved the previous exercise before starting this one.
 
 ```bash
 $ cat text.txt
@@ -274,7 +370,7 @@ $ diff text.txt text.txt.orig
 > can ran want plant
 ```
 
-**c)** For the input file `copyright.txt`, replace `copyright: 2018` with `copyright: 2020` and write back the changes to `copyright.txt` itself. The original contents should get saved to `2018_copyright.txt.bkp`
+**3)** For the input file `copyright.txt`, replace `copyright: 2018` with `copyright: 2020` and write back the changes to `copyright.txt` itself. The original contents should get saved to `2018_copyright.txt.bkp`
 
 ```bash
 $ cat copyright.txt
@@ -297,7 +393,7 @@ bla bla bla
 copyright: 2018
 ```
 
-**d)** In the code sample shown below, two files are created by redirecting output of `echo` command. Then a `perl` command is used to edit `b1.txt` in-place as well as create a backup named `bkp.b1.txt`. Will the `perl` command work as expected? If not, why?
+**4)** In the code sample shown below, two files are created by redirecting the output of the `echo` command. Then a Perl command is used to edit `b1.txt` in-place as well as create a backup named `bkp.b1.txt`. Will the Perl command work as expected? If not, why?
 
 ```bash
 $ echo '2 apples' > b1.txt
@@ -305,11 +401,31 @@ $ echo '5 bananas' > -ibkp.txt
 $ perl -ibkp.* -pe 's/2/two/' b1.txt
 ```
 
+**5)** For the input file `pets.txt`, remove the first occurrence of `I like ` from each line and write back the changes to `pets.txt` itself. The original contents should get saved with the same filename inside the `bkp` directory. Assume that you do not know whether `bkp` exists or not in the current working directory.
+
+```bash
+$ cat pets.txt
+I like cats
+I like parrots
+I like dogs
+
+##### add your solution here
+
+$ cat pets.txt
+cats
+parrots
+dogs
+$ cat bkp/pets.txt
+I like cats
+I like parrots
+I like dogs
+```
+
 <br>
 
 # Field separators
 
-**a)** Extract only the contents between `()` or `)(` from each input line. Assume that `()` characters will be present only once every line.
+**1)** For the input file `brackets.txt`, extract only the contents between `()` or `)(` from each input line. Assume that `()` characters will be present only once every line.
 
 ```bash
 $ cat brackets.txt
@@ -323,7 +439,7 @@ almond-pista
 yoyo
 ```
 
-**b)** For the input file `scores.csv`, extract `Name` and `Physics` fields in the format shown below.
+**2)** For the input file `scores.csv`, extract `Name` and `Physics` fields in the format shown below.
 
 ```bash
 $ cat scores.csv
@@ -345,7 +461,7 @@ Ort:72
 Ith:100
 ```
 
-**c)** For the input file `scores.csv`, display names of those who've scored above `80` in Maths.
+**3)** For the input file `scores.csv`, display names of those who've scored above `80` in Maths.
 
 ```bash
 ##### add your solution here
@@ -353,31 +469,31 @@ Cy
 Ith
 ```
 
-**d)** Display the number of word characters for the given inputs. Word definition here is same as used in regular expressions. Can you construct two different solutions as indicated below?
+**4)** Display the number of word characters for the given inputs. Word definition here is same as used in regular expressions. Can you construct two different solutions as indicated below?
 
 ```bash
-$ # solve using 's' operator
+# solve using the 's' operator
 $ echo 'hi there' | ##### add your solution here
 7
 
-$ # solve without using substitution or transliteration operator
+# solve without using the substitution or transliteration operators
 $ echo 'u-no;co%."(do_12:as' | ##### add your solution here
 12
 ```
 
-**e)** Construct a solution that works for both the given sample inputs and the corresponding output shown.
+**5)** For the input file `quoted.txt`, extract the sequence of characters surrounded by double quotes and display them in the format shown below.
 
 ```bash
-$ s1='1 "grape" and "mango" and "guava"'
-$ s2='("a 1""d""c-2""b")'
+$ cat quoted.txt
+1 "grape" and "mango" and "guava"
+("c 1""d""a-2""b")
 
-$ echo "$s1" | ##### add your solution here
+##### add your solution here
 "grape","guava","mango"
-$ echo "$s2" | ##### add your solution here
-"a 1","b","c-2","d"
+"a-2","b","c 1","d"
 ```
 
-**f)** Display only the third and fifth characters from each input line.
+**6)** Display only the third and fifth characters from each input line as shown below.
 
 ```bash
 $ printf 'restore\ncat one\ncricket' | ##### add your solution here
@@ -386,7 +502,7 @@ to
 ik
 ```
 
-**g)** Transform the given input file `fw.txt` to get the output as shown below. If second field is empty (i.e. contains only space characters), replace it with `NA`.
+**7)** Transform the given input file `fw.txt` to get the output as shown below. If a field is empty (i.e. contains only space characters), replace it with `NA`.
 
 ```bash
 $ cat fw.txt
@@ -402,7 +518,7 @@ $ cat fw.txt
 4.2,kt,45.1
 ```
 
-**h)** For the input file `scores.csv`, display the header as well as any row which contains `b` or `t` (irrespective of case) in the first field.
+**8)** For the input file `scores.csv`, display the header as well as any row which contains `b` or `t` (irrespective of case) in the first field.
 
 ```bash
 ##### add your solution here
@@ -412,7 +528,7 @@ Ort,68,72,66
 Ith,100,100,100
 ```
 
-**i)** Extract all whole words that contains `42` but not at the edge of a word. Assume a word cannot contain `42` more than once.
+**9)** Extract all whole words containing `42` but not at the edge of a word. Assume a word cannot contain `42` more than once.
 
 ```bash
 $ s='hi42bye nice1423 bad42 cool_42a 42fake'
@@ -422,7 +538,7 @@ nice1423
 cool_42a
 ```
 
-**j)** For the input file `scores.csv`, add another column named `GP` which is calculated out of `100` by giving `50%` weightage to `Maths` and `25%` each for `Physics` and `Chemistry`.
+**10)** For the input file `scores.csv`, add another column named **GP** which is calculated out of 100 by giving 50% weightage to Maths and 25% each for Physics and Chemistry.
 
 ```bash
 ##### add your solution here
@@ -432,10 +548,10 @@ Lin,78,83,80,79.75
 Er,56,79,92,70.75
 Cy,97,98,95,96.75
 Ort,68,72,66,68.5
-Ith,100,100,100,100.0
+Ith,100,100,100,100
 ```
 
-**k)** For the input file `mixed_fs.txt`, retain only first two fields from each input line. The input and output field separators should be space for first two lines and `,` for the rest of the lines.
+**11)** For the input file `mixed_fs.txt`, retain only the first two fields from each input line. The input and output field separators should be space for first two lines and `,` for the rest of the lines.
 
 ```bash
 $ cat mixed_fs.txt
@@ -443,24 +559,26 @@ rose lily jasmine tulip
 pink blue white yellow
 car,mat,ball,basket
 light green,brown,black,purple
+apple,banana,cherry
 
 ##### add your solution here
 rose lily
 pink blue
 car,mat
 light green,brown
+apple,banana
 ```
 
-**l)** For the given space separated numbers, filter only numbers in the range `20` to `1000` (inclusive).
+**12)** For the given space separated numbers, filter only numbers in the range `20` to `1000` (inclusive).
 
 ```bash
-$ s='20 -983 5 756 634223'
+$ s='20 -983 5 756 634223 1000'
 
-##### add your solution here
-20 756
+$ echo "$s" | ##### add your solution here
+20 756 1000
 ```
 
-**m)** For the given input file `words.txt`, filter all lines containing characters in ascending and descending order.
+**13)** For the given input file `words.txt`, filter all lines containing characters in ascending and descending order.
 
 ```bash
 $ cat words.txt
@@ -472,18 +590,18 @@ toe
 flee
 reed
 
-$ # ascending order
+# ascending order
 ##### add your solution here
 bot
 art
 
-$ # descending order
+# descending order
 ##### add your solution here
 toe
 reed
 ```
 
-**n)** For the given space separated words, extract the three longest words.
+**14)** For the given space separated words, extract the three longest words.
 
 ```bash
 $ s='I bought two bananas and three mangoes'
@@ -494,7 +612,7 @@ mangoes
 bought
 ```
 
-**o)** Convert the contents of `split.txt` as shown below.
+**15)** Convert the contents of `split.txt` as shown below.
 
 ```bash
 $ cat split.txt
@@ -511,50 +629,102 @@ pencil,3,paper
 pencil,8,paper
 ```
 
-**p)** Generate string combinations as shown below for the given input string passed as an environment variable.
+**16)** Generate string combinations as shown below for the given input string passed as an environment variable.
 
 ```bash
 $ s='{x,y,z}{1,2,3}' ##### add your solution here
 x1 x2 x3 y1 y2 y3 z1 z2 z3
 ```
 
+**17)** For the input file `varying_fields.txt`, construct a solution to get the output shown below.
+
+```bash
+$ cat varying_fields.txt
+hi,bye,there,was,here,to
+1,2,3,4,5
+
+##### add your solution here
+hi:bye:to
+1:2:5
+```
+
+**18)** The `fields.txt` file has fields separated by the `:` character. Delete `:` and the last field if there is a digit character anywhere before the last field. Solution shouldn't use the `s` operator.
+
+```bash
+$ cat fields.txt
+42:cat
+twelve:a2b
+we:be:he:0:a:b:bother
+apple:banana-42:cherry:
+dragon:unicorn:centaur
+
+##### add your solution here
+42
+twelve:a2b
+we:be:he:0:a:b
+apple:banana-42:cherry
+dragon:unicorn:centaur
+```
+
+**19)** The sample string shown below uses `cat` as the field separator (irrespective of case). Use space as the output field separator and add `42` as the last field.
+
+```bash
+$ s='applecatfigCaT12345cAtbanana'
+$ echo "$s" | ##### add your solution here
+apple fig 12345 banana 42
+```
+
+**20)** For the input file `sample.txt`, filter lines containing 5 or more lowercase vowels.
+
+```bash
+##### add your solution here
+How are you
+Believe it
+No doubt you like it too
+Much ado about nothing
+```
+
 <br>
 
 # Record separators
 
-**a)** The input file `jumbled.txt` consists of words separated by various delimiters. Display all words that contain `an` or `at` or `in` or `it`, one per line.
+**1)** The input file `jumbled.txt` consists of words separated by various delimiters. Display all words that contain `an` or `at` or `in` or `it`, one per line.
 
 ```bash
 $ cat jumbled.txt
 overcoats;furrowing-typeface%pewter##hobby
 wavering:concession/woof\retailer
+joint[]seer{intuition}titanic
 
 ##### add your solution here
 overcoats
 furrowing
 wavering
+joint
+intuition
+titanic
 ```
 
-**b)** Emulate `paste -sd,` with `perl`.
+**2)** Emulate `paste -sd,` with Perl.
 
 ```bash
-$ # this command joins all input lines with ',' character
+# this command joins all input lines with the ',' character
 $ paste -sd, ip.txt
 Hello World,How are you,This game is good,Today is sunny,12345,You are funny
-$ # make sure there's no ',' at end of the line
-$ # and that there's a newline character at the end of the line
+# make sure there's no ',' at the end of the line
+# and that there's a newline character at the end of the line
 ##### add your solution here
 Hello World,How are you,This game is good,Today is sunny,12345,You are funny
 
-$ # if there's only one line in input, again make sure there's no trailing ','
-$ # and that there's a newline character at the end of the line
-$ printf 'foo' | paste -sd,
-foo
-$ printf 'foo' | ##### add your solution here
-foo
+# if there's only one line in input, again make sure there's no trailing ','
+# and that there's a newline character at the end of the line
+$ printf 'fig' | paste -sd,
+fig
+$ printf 'fig' | ##### add your solution here
+fig
 ```
 
-**c)** For the input file `sample.txt`, extract all paragraphs having words starting with `do`.
+**3)** For the input file `sample.txt`, extract all paragraphs having words starting with `do`.
 
 ```bash
 $ cat sample.txt
@@ -573,7 +743,7 @@ No doubt you like it too
 Much ado about nothing
 He he he
 
-$ # note that there's no extra empty line at the end of expected output
+# note that there's no extra empty line at the end of the output
 ##### add your solution here
 Just do-it
 Believe it
@@ -583,10 +753,10 @@ Not a bit funny
 No doubt you like it too
 ```
 
-**d)** For the input file `sample.txt`, change all paragraphs into single line by joining lines using `.` and a space character as the separator. And add a final `.` to each paragraph.
+**4)** For the input file `sample.txt`, change each paragraph to a single line by joining lines using `.` and a space character as the separator. Also, add a final `.` to each paragraph.
 
 ```bash
-$ # note that there's no extra empty line at the end of expected output
+# note that there's no extra empty line at the end of the output
 ##### add your solution here
 Hello World.
 
@@ -599,21 +769,52 @@ Today is sunny. Not a bit funny. No doubt you like it too.
 Much ado about nothing. He he he.
 ```
 
-**e)** For the given input, use `;;` as record separators and `:` as field separators. Display all records with second field having an integer greater than `50`.
+**5)** For the given input, use `;;` as the record separators and `:` as the field separators. Filter records whose second field is greater than `50`.
 
 ```bash
 $ s='mango:100;;apple:25;;grapes:75'
 
-$ # note that the output has ;; at the end but not newline character
+# note that the output has ;; at the end, not a newline character
 $ printf "$s" | ##### add your solution here
 mango:100;;grapes:75;; 
+```
+
+**6)** The input file `f1.txt` has varying amount of empty lines between the records, change them to be always two empty lines. Also, remove the empty lines at the start and end of the file.
+
+```bash
+##### add your solution here
+hello
+
+
+world
+
+
+apple
+banana
+cherry
+
+
+tea coffee
+chocolate
+```
+
+**7)** The sample string shown below uses `cat` as the record separator. Display only the even numbered records separated by a single empty line.
+
+```bash
+$ s='applecatfigcat12345catbananacatguava:cat:mangocat3'
+$ echo "$s" | ##### add your solution here
+fig
+
+banana
+
+:mango
 ```
 
 <br>
 
 # Using modules
 
-**a)** For the given space separated words, display the max word determined by alphabetic order.
+**1)** For the given space separated words, display the max word determined by alphabetic order.
 
 ```bash
 $ s='let in bat xml me lion'
@@ -622,17 +823,17 @@ $ echo "$s" | ##### add your solution here
 xml
 ```
 
-**b)** For the given space separated words, randomize the order of characters for each word.
+**2)** For the given space separated words, randomize the order of characters for each word.
 
 ```bash
 $ s='this is a sample sentence'
 
-$ # sample randomized output shown here, could be different for you
+# sample randomized output shown here, could be different for you
 $ echo "$s" | ##### add your solution here
 htis si a melasp ecnnsete
 ```
 
-**c)** Use [metacpan: XML::LibXML](https://metacpan.org/pod/XML::LibXML) to get content of all tags named `blue` for the input file `sample.xml`. See [grantm: Perl XML::LibXML by example](https://grantm.github.io/perl-libxml-by-example/) for a detailed book on `XML::LibXML` module.
+**3)** Use the [metacpan: XML::LibXML](https://metacpan.org/pod/XML::LibXML) module to get the content of all tags named `blue` for the input file `sample.xml`. See [grantm: Perl XML::LibXML by example](https://grantm.github.io/perl-libxml-by-example/) for a detailed book on the `XML::LibXML` module.
 
 ```bash
 $ cat sample.xml
@@ -652,12 +853,12 @@ flower
 sand stone
 ```
 
-**d)** Display current time in the format shown below.
+**4)** Display the current time in the format shown below.
 
 ```bash
-$ # output will be different for you
+# output will be different for you
 ##### add your solution here
-29-Oct-2020 14:23:17
+12-Sep-2023 11:01:14
 ```
 
 >![info](../images/info.svg) See [metacpan: DateTime](https://metacpan.org/pod/DateTime) for more comprehensive functions.
@@ -666,10 +867,10 @@ $ # output will be different for you
 
 # Multiple file input
 
-**a)** Print the last field of first two lines for the input files passed as arguments to the `perl` script. Assume space as the field separators for these two files. To make the output more informative, print filenames and a separator as shown in the output below. Assume input files will have at least two lines.
+**1)** Print the last field of first two lines for the input files `table.txt` and `ip.txt`. Assume space as the field separators for these two files. To make the output more informative, print filenames and a separator as shown in the output below. Assume that the input files will have at least two lines.
 
 ```bash
-$ # assume table.txt ip.txt are passed as file inputs
+# assume table.txt ip.txt are passed as file inputs
 ##### add your solution here
 >table.txt<
 42
@@ -681,17 +882,16 @@ you
 ----------
 ```
 
-**b)** For the given list of input files, display all filenames that contain `at` or `fun` in the third field in any of the input lines. Assume space as the field separator.
+**2)** For the input files `sample.txt`, `secrets.txt`, `ip.txt` and `table.txt`, display only the names of files that contain `at` or `fun` in the third field. Assume space as the field separator.
 
 ```bash
-$ # assume sample.txt secrets.txt ip.txt table.txt are passed as file inputs
 ##### add your solution here
 secrets.txt
 ip.txt
 table.txt
 ```
 
-**c)** Print the first two lines for each of the input files `ip.txt`, `sample.txt` and `table.txt`. Also, add a separator between the results as shown below (note that the separator isn't present at the end of the output). Assume input files will have at least two lines.
+**3)** Print the first two lines for each of the input files `ip.txt`, `sample.txt` and `table.txt`. Also, add a separator between the results as shown below (note that the separator isn't present at the end of the output). Assume that the input files will have at least two lines.
 
 ```bash
 ##### add your solution here
@@ -705,11 +905,20 @@ brown bread mat hair 42
 blue cake mug shirt -7
 ```
 
+**4)** Print only the second field of the third line, if any, from these input files: `ip.txt`, `sample.txt` and `copyright.txt`. Consider space as the field separator.
+
+```bash
+##### add your solution here
+game
+day
+bla
+```
+
 <br>
 
 # Processing multiple records
 
-**a)** For the input file `sample.txt`, print a matching line containing `do` only if the previous line is empty and the line before that contains `you`.
+**1)** For the input file `sample.txt`, print lines containing `do` only if the previous line is empty and the line before that contains `you`.
 
 ```bash
 ##### add your solution here
@@ -717,10 +926,10 @@ Just do-it
 Much ado about nothing
 ```
 
-**b)** Print only the second matching line respectively for the search terms `do` and `not` for the input file `sample.txt`. Match these terms case insensitively.
+**2)** For the input file `sample.txt`, match lines containing `do` or `not` case insensitively. Each of these terms occur multiple times in the file. The goal is to print only the second occurrences of these terms (independent of each other).
 
 ```bash
-$ # for reference, here's all the matches
+# for reference, here are all the matches
 $ grep -i 'do' sample.txt
 Just do-it
 No doubt you like it too
@@ -734,10 +943,10 @@ No doubt you like it too
 Much ado about nothing
 ```
 
-**c)** For the input file `sample.txt`, print matching line as well as `n` lines around the matching lines. The value for `n` is passed to the `perl` command as an environment value.
+**3)** For the input file `sample.txt`, print the matching line as well as `n` lines around the matching lines. The value for `n` is passed to the Perl command as an environment value.
 
 ```bash
-$ # match a line containing 'are' or 'bit'
+# match a line containing 'are' or 'bit'
 $ n=1 ##### add your solution here
 Good day
 How are you
@@ -746,14 +955,14 @@ Today is sunny
 Not a bit funny
 No doubt you like it too
 
-$ # match a line containing 'World'
+# match a line containing 'World'
 $ n=2 ##### add your solution here
 Hello World
 
 Good day
 ```
 
-**d)** For the input file `broken.txt`, print all lines between the markers `top` and `bottom`. The first `perl` command shown below doesn't work because it is matching till end of file if second marker isn't found. Assume that the input file cannot have two `top` markers without a `bottom` marker appearing in between and vice-versa.
+**4)** For the input file `broken.txt`, print all lines between the markers `top` and `bottom`. The first Perl command shown below doesn't work because it is matching till the end of file as the second marker isn't found. Assume that the input file cannot have two `top` markers without a `bottom` marker appearing in between and vice-versa.
 
 ```bash
 $ cat broken.txt
@@ -769,7 +978,7 @@ Hi there
 Have a nice day
 Good bye
 
-$ # wrong output
+# wrong output
 $ perl -ne '$f=0 if /bottom/; print if $f; $f=1 if /top/' broken.txt
 3.14
 1234567890
@@ -777,13 +986,13 @@ Hi there
 Have a nice day
 Good bye
 
-$ # expected output
+# expected output
 ##### add your solution here
 3.14
 1234567890
 ```
 
-**e)** For the input file `concat.txt`, extract contents from a line starting with ``%%% `` until but not including the next such line. The block to be extracted is indicated by variable `n` passed as an environment value.
+**5)** For the input file `concat.txt`, extract contents from a line starting with ``%%% `` until but not including the next such line. The block to be extracted is indicated by the variable `n` passed as an environment value.
 
 ```bash
 $ cat concat.txt
@@ -814,7 +1023,7 @@ pink blue white yellow
 car,mat,ball,basket
 ```
 
-**f)** For the input file `perl.md`, replace all occurrences of `perl` (irrespective of case) with `Perl`. But, do not replace any matches between ` ```perl ` and ` ``` ` lines (`perl` in these markers shouldn't be replaced either).
+**6)** For the input file `perl.md`, replace all occurrences of `perl` (irrespective of case) with `Perl`. But, do not replace any matches between ` ```perl ` and ` ``` ` lines (`perl` in these markers shouldn't be replaced either). Save the output in `out.md`.
 
 ```bash
 ##### add your solution here, redirect the output to 'out.md'
@@ -823,7 +1032,7 @@ $ diff -sq out.md expected.md
 Files out.md and expected.md are identical
 ```
 
-**g)** Print the last two lines for each of the input files `ip.txt`, `sample.txt` and `table.txt`. Also, add a separator between the results as shown below (note that the separator isn't present at the end of the output). Assume input files will have at least two lines.
+**7)** Print the last two lines for each of the input files `ip.txt`, `sample.txt` and `table.txt`. Also, add a separator between the results as shown below (note that the separator isn't present at the end of the output). Assume that the input files will have at least two lines.
 
 ```bash
 ##### add your solution here
@@ -837,25 +1046,80 @@ blue cake mug shirt -7
 yellow banana window shoes 3.14
 ```
 
+**8)** For the input file `lines.txt`, delete the line that comes after a whole line containing `---`. Assume that such lines won't occur consecutively.
+
+```bash
+$ cat lines.txt
+Go There
+come on
+go there
+---
+2 apples and 5 mangoes
+come on!
+---
+2 Apples
+COME ON
+
+##### add your solution here
+Go There
+come on
+go there
+---
+come on!
+---
+COME ON
+```
+
+**9)** For the input file `result.csv`, use `---` to separate entries with the same name in the first column. Assume that the lines with the same first column value will always be next to each other.
+
+```bash
+$ cat result.csv
+Amy,maths,89
+Amy,physics,75
+Joe,maths,79
+John,chemistry,77
+John,physics,91
+Moe,maths,81
+Ravi,physics,84
+Ravi,chemistry,70
+Yui,maths,92
+
+##### add your solution here
+Amy,maths,89
+Amy,physics,75
+---
+Joe,maths,79
+---
+John,chemistry,77
+John,physics,91
+---
+Moe,maths,81
+---
+Ravi,physics,84
+Ravi,chemistry,70
+---
+Yui,maths,92
+```
+
 <br>
 
 # Two file processing
 
-**a)** Use contents of `match_words.txt` file to display matching lines from `jumbled.txt` and `sample.txt`. The matching criteria is that the second word of lines from these files should match the third word of lines from `match_words.txt`.
+**1)** Use the contents of `match_words.txt` file to display matching lines from `jumbled.txt` and `sample.txt`. The matching criteria is that the second word of lines from these files should match the third word of lines from `match_words.txt`.
 
 ```bash
 $ cat match_words.txt
 %whole(Hello)--{doubt}==ado==
 just,\joint*,concession<=nice
 
-$ # 'concession' is one of the third words from 'match_words.txt'
-$ # and second word from 'jumbled.txt'
+# 'concession' is one of the third words from 'match_words.txt'
+# and second word from 'jumbled.txt'
 ##### add your solution here
 wavering:concession/woof\retailer
 No doubt you like it too
 ```
 
-**b)** Interleave contents of `secrets.txt` with the contents of a file passed as `stdin` in the format as shown below.
+**2)** Interleave the contents of `secrets.txt` with the contents of a file passed as stdin in the format as shown below.
 
 ```bash
 ##### add your solution here, use 'table.txt' for stdin data
@@ -869,7 +1133,7 @@ Bi tac toe - 42
 yellow banana window shoes 3.14
 ```
 
-**c)** The file `search_terms.txt` contains one search string per line (these have no regexp metacharacters). Construct a solution that reads this file and displays search terms (matched case insensitively) that were found in all of the other input file arguments. Note that these terms should be matched with any part of the line, not just whole words.
+**3)** The file `search_terms.txt` contains one search string per line, and these terms have no regexp metacharacters. Construct a solution that reads this file and displays the search terms (matched case insensitively) that were found in every file passed as the arguments after `search_terms.txt`. Note that these terms should be matched anywhere in the line (so, don't use word boundaries).
 
 ```bash
 $ cat search_terms.txt
@@ -879,19 +1143,19 @@ you
 is
 at
 
-$ # ip: search_terms.txt jumbled.txt mixed_fs.txt secrets.txt table.txt oops.txt
+# ip: search_terms.txt jumbled.txt mixed_fs.txt secrets.txt table.txt oops.txt
 ##### add your solution here
 row
 at
 
-$ # ip: search_terms.txt ip.txt sample.txt oops.txt
+# ip: search_terms.txt ip.txt sample.txt oops.txt
 ##### add your solution here
 hello
 you
 is
 ```
 
-**d)** Replace third to fifth lines of input file `ip.txt` with second to fourth lines from file `para.txt`
+**4)** Replace the third to fifth lines of the input file `ip.txt` with the second to fourth lines from the file `para.txt`.
 
 ```bash
 ##### add your solution here
@@ -903,7 +1167,7 @@ to, do not let it end
 You are funny
 ```
 
-**e)** Insert one line from `jumbled.txt` before every two lines of `copyright.txt`
+**5)** Insert one line from `jumbled.txt` before every two lines of `copyright.txt`.
 
 ```bash
 ##### add your solution here
@@ -915,7 +1179,7 @@ bla bla bla
 copyright: 2020
 ```
 
-**f)** Use entire contents of `match.txt` to search `error.txt` and replace with contents of `jumbled.txt`. Partial lines should NOT be matched.
+**6)** Use the entire contents of `match.txt` to search `error.txt` and replace matching portions with the contents of `jumbled.txt`. Partial lines should NOT be matched.
 
 ```bash
 $ cat match.txt
@@ -936,17 +1200,88 @@ print this
 but not that or this
 overcoats;furrowing-typeface%pewter##hobby
 wavering:concession/woof\retailer
+joint[]seer{intuition}titanic
 if print this
 but not that
 overcoats;furrowing-typeface%pewter##hobby
 wavering:concession/woof\retailer
+joint[]seer{intuition}titanic
+```
+
+**7)** Display lines from `scores.csv` by matching the first field based on a list of names from the `names.txt` file. Also, change the output field separator to a space character.
+
+```bash
+$ cat names.txt
+Lin
+Cy
+Ith
+
+##### add your solution here
+Lin 78 83 80
+Cy 97 98 95
+Ith 100 100 100
+```
+
+**8)** The `result.csv` file has three columns — name, subject and mark. The `criteria.txt` file has two columns — name and subject. Match lines from `result.csv` based on the two columns from `criteria.txt` provided the mark column is greater than 80.
+
+```bash
+$ cat result.csv
+Amy,maths,89
+Amy,physics,75
+Joe,maths,79
+John,chemistry,77
+John,physics,91
+Moe,maths,81
+Ravi,physics,84
+Ravi,chemistry,70
+Yui,maths,92
+
+$ cat criteria.txt
+Amy maths
+John chemistry
+John physics
+Ravi chemistry
+Yui maths
+
+##### add your solution here
+Amy,maths,89
+John,physics,91
+Yui,maths,92
+```
+
+**9)** Insert the contents of `hex.txt` before a line matching `cake` of the input file `table.txt`
+
+```bash
+##### add your solution here
+brown bread mat hair 42
+start: 0xA0, func1: 0xA0
+end: 0xFF, func2: 0xB0
+restart: 0xA010, func3: 0x7F
+blue cake mug shirt -7
+yellow banana window shoes 3.14
+```
+
+**10)** For the input file `ip.txt`, replace lines containing `are` with the contents of `hex.txt`.
+
+```bash
+##### add your solution here
+Hello World
+start: 0xA0, func1: 0xA0
+end: 0xFF, func2: 0xB0
+restart: 0xA010, func3: 0x7F
+This game is good
+Today is sunny
+12345
+start: 0xA0, func1: 0xA0
+end: 0xFF, func2: 0xB0
+restart: 0xA010, func3: 0x7F
 ```
 
 <br>
 
 # Dealing with duplicates
 
-**a)** Retain only first copy of a line for the input file `lines.txt`. Case should be ignored while comparing lines. For example `hi there` and `HI TheRE` will be considered as duplicates.
+**1)** Retain only the first copy of a line for the input file `lines.txt`. Case should be ignored while comparing the lines. For example, `hi there` and `HI TheRE` should be considered as duplicates.
 
 ```bash
 $ cat lines.txt
@@ -969,7 +1304,7 @@ come on!
 2 Apples
 ```
 
-**b)** Retain only first copy of a line for the input file `twos.txt`. Assume space as field separator with two fields on each line. Compare the lines irrespective of order of the fields. For example, `hehe haha` and `haha hehe` will be considered as duplicates.
+**2)** Retain only the first copy of a line for the input file `twos.txt`. Assume space as the field separator with exactly two fields per line. Compare the lines irrespective of the order of the fields. For example, `hehe haha` and `haha hehe` should be considered as duplicates.
 
 ```bash
 $ cat twos.txt
@@ -993,7 +1328,7 @@ hehe bebe
 tru eblue
 ```
 
-**c)** For the input file `twos.txt`, display only unique lines. Assume space as field separator with two fields on each line. Compare the lines irrespective of order of the fields. For example, `hehe haha` and `haha hehe` will be considered as duplicates.
+**3)** For the input file `twos.txt`, display only the unique lines. Assume space as the field separator with exactly two fields per line. Compare the lines irrespective of the order of the fields. For example, `hehe haha` and `haha hehe` should be considered as duplicates.
 
 ```bash
 ##### add your solution here
@@ -1006,15 +1341,16 @@ tru eblue
 
 # Perl rename command
 
-**a)** Determine and implement the rename logic based on the filenames and expected output shown below.
+**1)** Determine and implement the rename logic based on the filenames and expected output shown below.
 
 ```bash
 $ touch ' (2020) Report part 1 . txt ' 'analysis Part 3 (2018) .log'
 
 ##### add your solution here
+
 $ ls
 2020_report_part_1.txt  analysis_part_3_2018.log
 ```
 
-**b)** See [unix.stackexchange: rename Q&A sorted by votes](https://unix.stackexchange.com/questions/tagged/rename?tab=Votes) for further reading as well as a source for exercises.
+**2)** See [unix.stackexchange: rename Q&A sorted by votes](https://unix.stackexchange.com/questions/tagged/rename?tab=Votes) for further reading as well as a source for exercises.
 

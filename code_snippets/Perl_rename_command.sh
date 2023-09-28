@@ -40,7 +40,7 @@ ls
 
 rm *.log
 
-## Rename only filename component
+## Rename only the filename component
 
 mkdir scripts
 

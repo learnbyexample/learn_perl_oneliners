@@ -2,9 +2,9 @@
 
 echo '   a   b   c   ' | perl -anE 'say $#F'
 
-echo '   a   b   c   ' | perl -anE 'say $F[0]'
+echo '   a   b   c   ' | perl -anE 'say "($F[0])"'
 
-echo '   a   b   c   ' | perl -anE 'say "$F[-1]."'
+echo '   a   b   c   ' | perl -anE 'say "($F[-1])"'
 
 printf '     one \t\f\v two\t\r\tthree \t\r ' | perl -anE 'say scalar @F'
 
@@ -24,9 +24,13 @@ printf 'COOL\nnice car\n' | perl -F'/[aeiou]/i' -anE 'say $#F'
 
 echo 'goal:amazing:whistle:kwality' | perl -F'/:/,$_,2' -ane 'print $F[1]'
 
+## Character-wise separation
+
 echo 'apple' | perl -F -anE 'say $F[0]'
 
 echo 'fox:αλεπού' | perl -CS -F -anE 'say @F[4..6]'
+
+## Newline character in the last field
 
 echo 'cat dog' | perl -anE 'say "[$F[-1]]"'
 
@@ -38,25 +42,31 @@ echo '  a b   c   ' | perl -anE 'say $#F'
 
 echo ':a:b:c:' | perl -F: -anE 'say $#F; say "[$F[-1]]"'
 
+## Using the -l option for field splitting
+
 echo 'cat:dog' | perl -F: -lane 'print "[$F[-1]]"'
 
 echo ':a:b:c:' | perl -F: -lane 'print scalar @F'
 
 echo ':a:b:c:' | perl -lne 'print scalar split/:/,$_,-1'
 
-echo 'pick eat rest laugh' | perl -F'/t /' -lane 'print $F[0]'
+## Whitespace and NUL characters in field separation
 
-echo 'pick eat rest laugh' | perl -F't ' -lane 'print $F[1]'
+s='pick eat rest laugh'
 
-echo 'pick eat rest laugh' | perl -F't\x20' -lane 'print $F[1]'
+echo "$s" | perl -F'/t /' -lane 'print $F[0]'
 
-echo 'pick eat rest laugh' | perl -F't[ ]' -lane 'print $F[1]'
+echo "$s" | perl -F't ' -lane 'print $F[1]'
 
-echo 'pick eat rest laugh' | perl -lne 'print((split /t[ ]/)[1])'
+echo "$s" | perl -F't\x20' -lane 'print $F[1]'
 
-printf 'a\0b\0c' | perl -F$'\0' -anE 'say join ",", @F' | cat -v
+echo "$s" | perl -F't[ ]' -lane 'print $F[1]'
 
-printf 'a\0b\0c' | perl -F'\0' -anE 'say join ",", @F' | cat -v
+echo "$s" | perl -lne 'print((split /t[ ]/)[1])'
+
+printf 'aa\0b\0c' | perl -F$'\0' -anE 'say join ",", @F' | cat -v
+
+printf 'aa\0b\0c' | perl -F'\0' -anE 'say join ",", @F' | cat -v
 
 ## Output field separator
 
@@ -86,7 +96,7 @@ echo "$s" | perl -F: -lane 'print "@F[0, 2]"'
 
 echo "$s" | perl -F: -lane 'BEGIN{$"="-"} print "msg: @F[-1, 1, 0]"'
 
-## Changing number of fields
+## Manipulating $#F
 
 s='goal:amazing:whistle:kwality'
 
@@ -103,13 +113,19 @@ cat marks.txt
 perl -anE 'BEGIN{$,="\t"; @g = qw(D C B A S)}
            say @F, $.==1 ? "Grade" : $g[$F[-1]/10 - 5]' marks.txt
 
-## Defining field contents instead of using split
+## Defining field contents instead of splitting
 
 s='Sample123string42with777numbers'
 
 echo "$s" | perl -nE '@f=/\d+/g; say $f[1]'
 
-echo "$s" | perl -lne 'print join ",", /[a-z]+/ig'
+s='coat Bin food tar12 best Apple fig_42'
+
+echo "$s" | perl -nE 'say join ",", /\b[a-z0-9]+\b/g'
+
+s='items: "apple" and "mango"'
+
+echo "$s" | perl -nE '@f=/"[^"]+"/g; say $f[0]'
 
 perl -nE 'say join "\n", //g if /\bm\w*\b/' table.txt
 
@@ -153,7 +169,7 @@ echo "$s" | perl -F: -lane 'print join ":", grep {/i[nts]/} @F'
 
 echo "$s" | perl -F: -lane 'print scalar grep {!/\d/} @F'
 
-s='hour hand band mat heated apple'
+s='hour hand band mat heated apple hit'
 
 echo "$s" | perl -lane 'print join "\n", grep {!/^h/ && length()<4} @F'
 
@@ -191,7 +207,7 @@ echo "$s" | perl -lane 'print join ":", sort {length($a) <=> length($b)} @F'
 
 echo "$s" | perl -lane 'print join ":", sort {length($b) <=> length($a)} @F'
 
-echo 'foobar' | perl -F -lane 'print reverse sort @F'
+echo 'dragon' | perl -F -lane 'print reverse sort @F'
 
 s='try a bad to good i teal by nice how'
 

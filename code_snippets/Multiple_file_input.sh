@@ -30,6 +30,8 @@ printf 'apple\nmango\n' | perl -e 'print <STDIN>' greeting.txt
 
 ## Skipping remaining contents per file
 
+perl -ne '/\bba/ ? close ARGV : print' ip.txt table.txt
+
 perl -nE 'if(/I/){say $ARGV; close ARGV}' f[1-3].txt greeting.txt
 
 perl -nE '$m1=1 if /e\b/; $m2=1 if /[bm]at/i;
