@@ -31,6 +31,14 @@ For the web version of the book, visit https://learnbyexample.github.io/learn_pe
 
 <br>
 
+# Testimonials
+
+>This is fantastic! 👏 I use Perl one-liners for record and text processing a lot and this will be definitely something I will keep coming back to - I’ve already learned a trick from “Context Matching” (9) 🙂
+>
+> — [feedback on Linux@lemmy.ml](https://programming.dev/comment/3277968)
+
+<br>
+
 # Feedback
 
 ⚠️ ⚠️ Please DO NOT submit pull requests. Main reason being any modification requires changes in multiple places.
